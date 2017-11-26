@@ -154,15 +154,15 @@ function snek() {
 */
 
 function addUser() {
-	console.log('addNewUser');
+	console.log('adding new user form:' + userFormToJson());
 	$.ajax({
 		type: 'POST',
 		contentType: 'application/json',
 		url: rootURL + '/users',
 		dataType: "text",
-		data: formToJSON(),
+		data: userFormToJSON(),
 		success: function(data, textStatus, jqXHR) {
-			alert(data);
+			//alert(data);
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
 			alert('addUser error: ' + textStatus);
@@ -170,7 +170,7 @@ function addUser() {
 	});
 }
 
-function formToJSON() {
+function userFormToJSON() {
 	return JSON.stringify({
 		"name": $('#newUserName').val(),
 		"pass": $('#newUserPass').val()
@@ -178,14 +178,12 @@ function formToJSON() {
 }
 
 function getUser() {
-  console.log('getUser');
+  console.log('get User');
   $.ajax({
       type: 'GET',
       url: rootURL + '/users',
       dataType: "json",
       success: function(data){
-        //var list = data == null ? [] : (data.users instanceof Array ? data.users : [data.users]);
-
         $('#textArea').text(data.users[1].name);
       }
   });
@@ -194,7 +192,6 @@ function getUser() {
 function upload() {
 	var file = document.getElementById('image').files[0];
 	var formData = new FormData($('#upload')[0]);
-	//formData.append('file', file);
 
 	$.ajax({
 		url: rootURL + '/upload',
@@ -204,14 +201,12 @@ function upload() {
 		contentType: false,
 		processData: false,
 		success: function(data, textStatus, jqXHR) {
-			alert(data);
+			//alert(data);
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
 			alert('upload error: ' + textStatus + '\nerror: ' + errorThrown);
 		}
-
 	});
-
 }
 
 function display() {
