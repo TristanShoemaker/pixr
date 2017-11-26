@@ -1,5 +1,5 @@
 <?php
-
+HELLO MACLEAN
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use Slim\Http\UploadedFile;
@@ -21,7 +21,7 @@ function getConnection() {
 	$dbhost="localhost";
 	$dbuser="root";
 	$dbname="pixr";
-	$dbh = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser);
+	$dbh = new PDO("mysql:h	ost=$dbhost;dbname=$dbname", $dbuser);
 	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	return $dbh;
 }
