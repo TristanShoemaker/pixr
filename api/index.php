@@ -13,10 +13,8 @@ $app = new \Slim\App;
 $app->post('/users', 'addNewUser');
 $app->get('/users','getUser');
 $app->post('/upload', 'upload');
-$app->get('/display', 'display');
-$app->get('/python', 'snek');
 $app->get('/imgdata/{imgname}', 'getData');
-
+$app->delete('/delete/{}')
 $app->run();
 
 function getConnection() {

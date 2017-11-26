@@ -119,6 +119,7 @@ function makePretty(data) {
 	document.getElementById('field3').setAttribute("style", "background-color: " + data.gval);
 	document.getElementById('field4').setAttribute("style", "background-color: " + data.bval);
 }
+
 /* //not in use currently
 function addData() {
 	console.log('addNewUser');
