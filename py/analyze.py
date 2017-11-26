@@ -3,6 +3,9 @@ import sys
 import os
 import time
 import numpy as np
+import scipy
+import scipy.misc
+import scipy.cluster
 from PIL import Image, ImageFilter
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
@@ -74,6 +77,42 @@ def meanfunc(path):
     mean = rgb2hex(mean)
     return  mean
 
+def freqfunc(path):
+    im = Image.open(path)
+    histo = im.histogram()
+    histor = histo[0:255]
+    histog = histo[256:511]
+    histob = histo[512:767]
+    histo[512]=0
+
+    plt.figure()
+    plt.gca().set_ylim([0,max(histo)+50])
+    plt.gca().set_xlim([0,255])
+
+    plt.fill_between(range(0,255),0,histor, color='red', alpha=0.3)
+    plt.fill_between(range(0,255),0,histog, color='green', alpha=0.3)
+    plt.fill_between(range(0,255),0,histob, color='blue', alpha=0.3)
+    #plt.show()
+
+    pathHead, pathTail = os.path.split(path)
+    newPath = path[:-4] + '_analysis/' + pathTail[:-4] + '_freq' + '.png'
+    plt.savefig(newPath)
+
+def modefunc(path,colour):
+    im = Image.open(path)
+    histo = im.histogram()
+    if colour == 'r':
+        histo = histo[0:255]
+        value = rgb2hex([max(xrange(len(histo)), key=histo.__getitem__) / 255.0,0,0])
+    if colour == 'g':
+        histo = histo[256:511]
+        value = rgb2hex([0,max(xrange(len(histo)), key=histo.__getitem__) / 255.0,0])
+    if colour == 'b':
+        histo = histo[512:767]
+        value = rgb2hex([0,0,max(xrange(len(histo)), key=histo.__getitem__) / 255.0])
+
+    return value
+
 def masterfunc(path):
     pathHead, pathTail = os.path.split(path)
 
@@ -81,9 +120,12 @@ def masterfunc(path):
     data.append('imgname=' + pathTail[:-4] + '&')
     data.append('mean=' + meanfunc(path) + '&')
     data.append('median=' + medianfunc(path) + '&')
-    data.append('rval=' + cintensityfunc(path,'r') + '&')
-    data.append('bval=' + cintensityfunc(path,'g') + '&')
-    data.append('gval=' + cintensityfunc(path,'b') + '&')
+    data.append('rmean=' + cintensityfunc(path,'r') + '&')
+    data.append('bmean=' + cintensityfunc(path,'g') + '&')
+    data.append('gmean=' + cintensityfunc(path,'b') + '&')
+    data.append('rmode=' + modefunc(path,'r') + '&')
+    data.append('bmode=' + modefunc(path,'g') + '&')
+    data.append('gmode=' + modefunc(path,'b') + '&')
 
     print(''.join(data))
 
@@ -97,17 +139,20 @@ if __name__ ==  "__main__":
     parser.add_argument('--median',action='store_true',help='median colour')
     parser.add_argument('--cintensity',help='intensity of specfic color r, g, or b')
     parser.add_argument('--mean',action='store_true',help='mean colour')
+    parser.add_argument('--freq',action='store_true',help='generate colour frequency plot')
+    parser.add_argument('--mode',help='mode colour of r, g or b')
 
     args = parser.parse_args()
     filePath = args.path
+    fileNameNoExt = os.path.splitext(filePath)[0]
 
-    if not os.path.exists(filePath[:-4] + '_analysis'):
-        os.makedirs(filePath[:-4] + '_analysis')
+    if not os.path.exists(fileNameNoExt + '_analysis'):
+        os.makedirs(fileNameNoExt + '_analysis')
 
-    if filePath[-4:] != '.png':
-        pilGetImg(filePath).save(filePath[:-4] + '.png')
+    if os.path.splitext(filePath)[1] != '.png':
+        pilGetImg(filePath).save(fileNameNoExt + '.png')
         os.remove(filePath)
-        filePath = filePath[:-4] + '.png'
+        filePath = fileNameNoExt + '.png'
 
     if args.masterdata:
         masterfunc(filePath)
@@ -126,3 +171,9 @@ if __name__ ==  "__main__":
 
     if args.mean:
         meanfunc(filePath)
+
+    if args.freq:
+        freqfunc(filePath)
+
+    if args.mode:
+        modefunc(filePath,args.mode)
