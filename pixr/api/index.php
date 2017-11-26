@@ -16,9 +16,6 @@ $app->post('/upload', 'upload');
 $app->get('/display', 'display');
 $app->get('/python', 'snek');
 $app->get('/imgdata/{imgname}', 'getData');
-$app->delete('/deleteimg/{imgname}','deleteImg');
-$app->delete('/deleteusr/{usrname}','deleteUsr');
-$app->get('/getAll', 'getAllImages');
 
 $app->run();
 
@@ -29,40 +26,6 @@ function getConnection() {
 	$dbh = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser);
 	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	return $dbh;
-}
-
-function getAllImages() {
-	$directory = '../images/';
-	$files = glob($directory."*.png");
-	echo '{"filename": ' . json_encode($files) .'}';
-}
-
-function deleteUsr(Request $request, Response $response, $args) { //not in js
-	$name = $args['usrname'];
-	$sql = "DELETE FROM users WHERE name=:name";
-	try {
-		$db = getConnection();
-		$stmt = $db->prepare($sql);
-		$stmt->bindParam("name", $name);
-		$stmt->execute();
-		$db = null;
-	} catch(PDOException $e) {
-		echo '{"error":{"text":'. $e->getMessage() .'}}';
-	}
-}
-
-function deleteImg(Request $request, Response $response, $args) { //not in js
-	$name = $args['imgname'];
-	$sql = "DELETE FROM imgdata WHERE name=:name";
-	try {
-		$db = getConnection();
-		$stmt = $db->prepare($sql);
-		$stmt->bindParam("name", $name);
-		$stmt->execute();
-		$db = null;
-	} catch(PDOException $e) {
-		echo '{"error":{"text":'. $e->getMessage() .'}}';
-	}
 }
 
 function getData(Request $request, Response $response, $args){
@@ -108,7 +71,7 @@ function addData(String $value) {
 function upload(Request $request, Response $response) {
 	$imgpath = '../images/'.time().$_FILES['image']['name'];
 	move_uploaded_file($_FILES['image']['tmp_name'],$imgpath); //move(temp_name_in_system, to: directory/
-	$command = '//anaconda/bin/python ../py/analyze.py '.$imgpath.' --masterdata 2>&1';
+	$command = 'python ../py/analyze.py '.$imgpath.' --masterdata 2>&1';
 	$output = shell_exec($command);
 	addData($output);
 	echo $output;

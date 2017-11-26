@@ -1,7 +1,7 @@
 var rootURL = "http://pixr.local/api";
-var currentImg = "";
 
-document.onload = fetchAllImages();
+
+
 
 $('#btnSave').click(function() {
 	addUser();
@@ -31,19 +31,19 @@ $('#btnSnek').click(function() {
 $('#btnNew').click(function() {
 	document.getElementById('dataArea').setAttribute("style", "display:none");
 	document.getElementById('mainArea').setAttribute("style", "display:none");
-	document.getElementById('uplArea').setAttribute("style", "display:none");
+	document.getElementById('analArea').setAttribute("style", "display:none");
 	document.getElementById('tranArea').setAttribute("style", "display:none");
 	document.getElementById('conArea').setAttribute("style", "display:none");
 	document.getElementById('newArea').setAttribute("style", "display:block");
-	fetchAllImages();
+
 	return false;
 
 })
 
-$('#btnUpl').click(function() {
+$('#btnAnal').click(function() {
 	document.getElementById('dataArea').setAttribute("style", "display:none");
 	document.getElementById('mainArea').setAttribute("style", "display:none");
-	document.getElementById('uplArea').setAttribute("style", "display:block");
+	document.getElementById('analArea').setAttribute("style", "display:block");
 	document.getElementById('tranArea').setAttribute("style", "display:none");
 	document.getElementById('newArea').setAttribute("style", "display:none");
 
@@ -54,28 +54,28 @@ $('#btnData').click(function() {
 	document.getElementById('dataArea').setAttribute("style", "display:block");
 	document.getElementById('mainArea').setAttribute("style", "display:none");
 	document.getElementById('tranArea').setAttribute("style", "display:none");
-	document.getElementById('uplArea').setAttribute("style", "display:none");
+	document.getElementById('analArea').setAttribute("style", "display:none");
 	document.getElementById('conArea').setAttribute("style", "display:none");
 	document.getElementById('newArea').setAttribute("style", "display:none");
 
-	var data = getData('15117244173');
+	var data = getData('3');
 });
 
 $('#btnPixr').click(function() {
 	document.getElementById('dataArea').setAttribute("style", "display:none");
-	document.getElementById('mainArea').setAttribute("style", "display:none");
-	document.getElementById('uplArea').setAttribute("style", "display:none");
+	document.getElementById('mainArea').setAttribute("style", "display:block");
+	document.getElementById('analArea').setAttribute("style", "display:none");
 	document.getElementById('tranArea').setAttribute("style", "display:none");
 	document.getElementById('conArea').setAttribute("style", "display:none");
-	document.getElementById('newArea').setAttribute("style", "display:block");
-	fetchAllImages();
+	document.getElementById('newArea').setAttribute("style", "display:none");
+
 	return false;
 })
 
 $('#btnTran').click(function() {
 	document.getElementById('dataArea').setAttribute("style", "display:none");
 	document.getElementById('mainArea').setAttribute("style", "display:none");
-	document.getElementById('uplArea').setAttribute("style", "display:none");
+	document.getElementById('analArea').setAttribute("style", "display:none");
 	document.getElementById('tranArea').setAttribute("style", "display:block");
 	document.getElementById('conArea').setAttribute("style", "display:none");
 	document.getElementById('newArea').setAttribute("style", "display:none");
@@ -86,7 +86,7 @@ $('#btnTran').click(function() {
 $('#btnCont').click(function() {
 	document.getElementById('dataArea').setAttribute("style", "display:none");
 	document.getElementById('mainArea').setAttribute("style", "display:none");
-	document.getElementById('uplArea').setAttribute("style", "display:none");
+	document.getElementById('analArea').setAttribute("style", "display:none");
 	document.getElementById('tranArea').setAttribute("style", "display:none");
 	document.getElementById('conArea').setAttribute("style", "display:block");
 	document.getElementById('newArea').setAttribute("style", "display:none");
@@ -101,12 +101,10 @@ function getData(imgname) {
       type: 'GET',
       url: rootURL + '/imgdata/' + imgname,
       dataType: "json",
-      asynch: false,
       success: function(data){
 				var imgdata = data.imgdata;
 				console.log(data.imgdata);
-				currentImg = data.imgdata;
-				//makePretty(imgdata);
+				makePretty(imgdata);
 
       },
 			error: function(data) {
@@ -154,48 +152,6 @@ function snek() {
 	});
 }
 */
-
-function fetchAllImages() {
-	$.ajax({
-		type: 'GET',
-		url: rootURL + '/getAll',
-		dataType: "json",
-		success: function(data) {
-			console.log(data.filename.length);
-			var newImages = "";
-			$('#newAreaforImages').empty();
-			var rowLength = 5;
-			for (i=0; i<data.filename.length; i++) {
-				//newImages += '<a href="api/inspectImage"> <img src="' +data.filename[i]+ '" style="width:150px;" /></a>';
-				newImages += '<img src="' +data.filename[i]+ '" onclick="inspectImage(\'' + data.filename[i] + '\')"/>';
-
-				console.log(newImages);
-			}
-			$('#newAreaforImages').append(newImages);
-		},
-		error: function(data) {
-			console.log("error: " + data.filename);
-		}
-	});
-}
-
-function inspectImage(image) {
-	document.getElementById('newArea').setAttribute("style", "display:none");
-	document.getElementById('singleImageDataArea').setAttribute("style", "display: block");
-	$('#singleImage').attr('src', image);
-	var split_image = image.split("/");
-	console.log(split_image);
-	var split_dot = split_image[split_image.length - 1].split(".");
-	var imgname = split_dot[0];
-	console.log(imgname);
-	getData(imgname);
-	document.getElementById('show1').setAttribute("style", "background-color: " + currentImg.rval);
-	document.getElementById('show2').setAttribute("style", "background-color: " + currentImg.gval);
-	document.getElementById('show3').setAttribute("style", "background-color: " + currentImg.bval);
-
-	
-
-}
 
 function addUser() {
 	console.log('adding new user form:' + userFormToJson());
