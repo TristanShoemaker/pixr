@@ -101,6 +101,8 @@ def freqfunc(path):
 def modefunc(path,colour):
     im = Image.open(path)
     histo = im.histogram()
+    histo[512] = 0;
+    
     if colour == 'r':
         histo = histo[0:255]
         value = rgb2hex([max(xrange(len(histo)), key=histo.__getitem__) / 255.0,0,0])
@@ -121,11 +123,11 @@ def masterfunc(path):
     data.append('mean=' + meanfunc(path) + '&')
     data.append('median=' + medianfunc(path) + '&')
     data.append('rmean=' + cintensityfunc(path,'r') + '&')
-    data.append('bmean=' + cintensityfunc(path,'g') + '&')
-    data.append('gmean=' + cintensityfunc(path,'b') + '&')
+    data.append('gmean=' + cintensityfunc(path,'g') + '&')
+    data.append('bmean=' + cintensityfunc(path,'b') + '&')
     data.append('rmode=' + modefunc(path,'r') + '&')
-    data.append('bmode=' + modefunc(path,'g') + '&')
-    data.append('gmode=' + modefunc(path,'b') + '&')
+    data.append('gmode=' + modefunc(path,'g') + '&')
+    data.append('bmode=' + modefunc(path,'b') + '&')
 
     print(''.join(data))
 

@@ -189,11 +189,10 @@ function inspectImage(image) {
 	var imgname = split_dot[0];
 	console.log(imgname);
 	getData(imgname);
-	document.getElementById('show1').setAttribute("style", "background-color: " + currentImg.rval);
-	document.getElementById('show2').setAttribute("style", "background-color: " + currentImg.gval);
-	document.getElementById('show3').setAttribute("style", "background-color: " + currentImg.bval);
-
-	
+	console.log(currentImg);
+	document.getElementById('show1').setAttribute("style", "background-color: " + currentImg.rmode);
+	document.getElementById('show2').setAttribute("style", "background-color: " + currentImg.gmode);
+	document.getElementById('show3').setAttribute("style", "background-color: " + currentImg.bmode);
 
 }
 

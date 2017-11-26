@@ -87,16 +87,19 @@ function addData(String $value) {
 	//echo $request->getParam('name');
 	parse_str($value);
 
-	$sql = "INSERT INTO imgdata (imgname, mean, median, rval, gval, bval) VALUES (:imgname, :mean, :median, :rval, :gval, :bval)";
+	$sql = "INSERT INTO imgdata (imgname, mean, median, rmean, gmean, bmean, rmode, gmode, bmode) VALUES (:imgname, :mean, :median, :rmean, :gmean, :bmean, :rmode, :gmode, :bmode)";
 	try {
 		$db = getConnection();
 		$stmt = $db->prepare($sql);
 		$stmt->bindParam("imgname", $imgname);
 		$stmt->bindParam("mean", $mean);
 		$stmt->bindParam("median", $median);
-		$stmt->bindParam("rval", $rval);
-		$stmt->bindParam("gval", $gval);
-		$stmt->bindParam("bval", $bval);
+		$stmt->bindParam("rmean", $rmean);
+		$stmt->bindParam("gmean", $gmean);
+		$stmt->bindParam("bmean", $bmean);
+		$stmt->bindParam("rmode", $rmode);
+		$stmt->bindParam("gmode", $gmode);
+		$stmt->bindParam("bmode", $bmode);
 		$stmt->execute();
 		$db = null;
 		//echo json_encode($newuser);
@@ -106,9 +109,10 @@ function addData(String $value) {
 }
 
 function upload(Request $request, Response $response) {
-	$imgpath = '../images/'.time().$_FILES['image']['name'];
+	$imgpath = '../images/'.time();
 	move_uploaded_file($_FILES['image']['tmp_name'],$imgpath); //move(temp_name_in_system, to: directory/
-	$command = '//anaconda/bin/python ../py/analyze.py '.$imgpath.' --masterdata 2>&1';
+	//$command = '//anaconda/bin/python ../py/analyze.py '.$imgpath.' --masterdata 2>&1';
+	$command = 'python ../py/analyze.py '.$imgpath.' --masterdata 2>&1';
 	$output = shell_exec($command);
 	addData($output);
 	echo $output;
