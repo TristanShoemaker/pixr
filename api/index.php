@@ -1,5 +1,4 @@
 <?php
-HELLO MACLEAN
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use Slim\Http\UploadedFile;
@@ -14,8 +13,10 @@ $app->post('/users', 'addNewUser');
 $app->get('/users','getUser');
 $app->post('/upload', 'upload');
 $app->get('/imgdata/{imgname}', 'getData');
-$app->delete('/delete/{}')
+$app->delete('/deleteimg/{imgname}','deleteImg');
+$app->delete('/deleteusr/{usrname}','deleteUsr');
 $app->run();
+
 
 function getConnection() {
 	$dbhost="localhost";
@@ -24,6 +25,34 @@ function getConnection() {
 	$dbh = new PDO("mysql:h	ost=$dbhost;dbname=$dbname", $dbuser);
 	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	return $dbh;
+}
+
+function deleteUsr(Request $request, Response $response, $args) {
+	$name = $args['usrname'];
+	$sql = "DELETE FROM users WHERE name=:name";
+	try {
+		$db = getConnection();
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam("name", $name);
+		$stmt->execute();
+		$db = null;
+	} catch(PDOException $e) {
+		echo '{"error":{"text":'. $e->getMessage() .'}}';
+	}
+}
+
+function deleteImg(Request $request, Response $response, $args) {
+	$name = $args['imgname'];
+	$sql = "DELETE FROM imgdata WHERE name=:name";
+	try {
+		$db = getConnection();
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam("name", $name);
+		$stmt->execute();
+		$db = null;
+	} catch(PDOException $e) {
+		echo '{"error":{"text":'. $e->getMessage() .'}}';
+	}
 }
 
 function getData(Request $request, Response $response, $args){
@@ -45,7 +74,6 @@ function getData(Request $request, Response $response, $args){
 }
 
 function addData(String $value) {
-	//echo $request->getParam('name');
 	parse_str($value);
 
 	$sql = "INSERT INTO imgdata (imgname, mean, median, rval, gval, bval) VALUES (:imgname, :mean, :median, :rval, :gval, :bval)";
@@ -107,10 +135,5 @@ function getUser(){
     echo '{"error":{"text":'. $e->getMessage() .'}}';
   }
 }
-
-
-
-
-
 
 ?>

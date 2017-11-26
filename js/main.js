@@ -1,8 +1,5 @@
 var rootURL = "http://pixr.local/api";
-
-
-
-
+var currentimg;
 $('#btnSave').click(function() {
 	addUser();
 	return false;
@@ -58,7 +55,8 @@ $('#btnData').click(function() {
 	document.getElementById('conArea').setAttribute("style", "display:none");
 	document.getElementById('newArea').setAttribute("style", "display:none");
 
-	var data = getData('3');
+	getData('test');
+	makepretty();
 });
 
 $('#btnPixr').click(function() {
@@ -102,10 +100,8 @@ function getData(imgname) {
       url: rootURL + '/imgdata/' + imgname,
       dataType: "json",
       success: function(data){
-				var imgdata = data.imgdata;
-				console.log(data.imgdata);
-				makePretty(imgdata);
-
+				currentimg = data.imgdata;
+				console.log(currentimg);
       },
 			error: function(data) {
 				alert("error: " + data);
@@ -114,45 +110,12 @@ function getData(imgname) {
 
 }
 
-function makePretty(data) {
+function makepretty() {
+	data = currentimg;
 	document.getElementById('field2').setAttribute("style", "background-color: " + data.rval);
 	document.getElementById('field3').setAttribute("style", "background-color: " + data.gval);
 	document.getElementById('field4').setAttribute("style", "background-color: " + data.bval);
 }
-
-/* //not in use currently
-function addData() {
-	console.log('addNewUser');
-	$.ajax({
-		type: 'POST',
-		contentType: 'application/json',
-		url: rootURL + '/imgdata',
-		dataType: "text",
-		data: formToJSON(),
-		success: function(data, textStatus, jqXHR) {
-			alert('success: '+ data);
-		},
-		error: function(jqXHR, textStatus, errorThrown) {
-			alert('addUser error: ' + textStatus);
-		}
-	});
-}
-*/
-/* //not in use currently
-function snek() {
-	$.ajax({
-		type: 'GET',
-		url: rootURL + '/python',
-		dataType: "text",
-		success: function(data) {
-			alert('python success: '+ data);
-		},
-		error: function(data) {
-			alert("error: " + data);
-		}
-	});
-}
-*/
 
 function addUser() {
 	console.log('adding new user form:' + userFormToJson());
