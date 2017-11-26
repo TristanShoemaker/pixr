@@ -13,8 +13,6 @@ $('#btnGetUsers').click(function() {
   return false;
 });
 
-
-
 $('#upBtn').click(function() {
 	upload();
 	return false;
@@ -61,8 +59,6 @@ $('#btnData').click(function() {
 	document.getElementById('newArea').setAttribute("style", "display:none");
 
 	var data = getData('3');
-
-	
 });
 
 $('#btnPixr').click(function() {
@@ -72,7 +68,7 @@ $('#btnPixr').click(function() {
 	document.getElementById('tranArea').setAttribute("style", "display:none");
 	document.getElementById('conArea').setAttribute("style", "display:none");
 	document.getElementById('newArea').setAttribute("style", "display:none");
-	
+
 	return false;
 })
 
@@ -83,9 +79,8 @@ $('#btnTran').click(function() {
 	document.getElementById('tranArea').setAttribute("style", "display:block");
 	document.getElementById('conArea').setAttribute("style", "display:none");
 	document.getElementById('newArea').setAttribute("style", "display:none");
-	
-	return false;
 
+	return false;
 })
 
 $('#btnCont').click(function() {
@@ -97,11 +92,10 @@ $('#btnCont').click(function() {
 	document.getElementById('newArea').setAttribute("style", "display:none");
 
 	return false;
-
 })
 
 function getData(imgname) {
-  console.log('getDBInfo');
+  console.log('Get data for image: ' + imgname);
 
   $.ajax({
       type: 'GET',
@@ -111,24 +105,23 @@ function getData(imgname) {
 				var imgdata = data.imgdata;
 				console.log(data.imgdata);
 				makePretty(imgdata);
-				
+
       },
 			error: function(data) {
 				alert("error: " + data);
 			}
   });
-	
+
 }
 
 function makePretty(data) {
 	document.getElementById('field2').setAttribute("style", "background-color: " + data.rval);
 	document.getElementById('field3').setAttribute("style", "background-color: " + data.gval);
 	document.getElementById('field4').setAttribute("style", "background-color: " + data.bval);
-
 }
-
-function addData() { //not in use?
-	//console.log('addNewUser');
+/* //not in use currently
+function addData() {
+	console.log('addNewUser');
 	$.ajax({
 		type: 'POST',
 		contentType: 'application/json',
@@ -143,7 +136,8 @@ function addData() { //not in use?
 		}
 	});
 }
-
+*/
+/* //not in use currently
 function snek() {
 	$.ajax({
 		type: 'GET',
@@ -157,9 +151,10 @@ function snek() {
 		}
 	});
 }
+*/
 
 function addUser() {
-	//console.log('addNewUser');
+	console.log('addNewUser');
 	$.ajax({
 		type: 'POST',
 		contentType: 'application/json',
