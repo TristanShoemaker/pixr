@@ -33,9 +33,11 @@ function getConnection() {
 
 function analyze(Request $request, Response $response, $args) {
 	parse_str($args['flag']);
-	$command = 'python ../py/analyze.py ../images/'.$imgname.' '.$flag.' 2>&1';
-	$output = shell_exec($command);
-	echo $output;
+	if(! file_exists('../images/'.$imgname.'_analysis/'.$imgname.'_'.$flag.'.png')) {
+		$command = 'python ../py/analyze.py ../images/'.$imgname.' --'.$flag.' 2>&1';
+		$output = shell_exec($command);
+		echo $output;
+	}
 }
 
 function getAllImages() {
