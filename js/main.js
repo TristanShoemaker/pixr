@@ -35,6 +35,8 @@ $('#btnNew').click(function() {
 	document.getElementById('tranArea').setAttribute("style", "display:none");
 	document.getElementById('conArea').setAttribute("style", "display:none");
 	document.getElementById('newArea').setAttribute("style", "display:block");
+	document.getElementById('singleImageDataArea').setAttribute("style", "display: none");
+
 	fetchAllImages();
 	return false;
 
@@ -46,6 +48,7 @@ $('#btnUpl').click(function() {
 	document.getElementById('uplArea').setAttribute("style", "display:block");
 	document.getElementById('tranArea').setAttribute("style", "display:none");
 	document.getElementById('newArea').setAttribute("style", "display:none");
+	document.getElementById('singleImageDataArea').setAttribute("style", "display: none");
 
 	return false;
 })
@@ -57,11 +60,9 @@ $('#btnData').click(function() {
 	document.getElementById('uplArea').setAttribute("style", "display:none");
 	document.getElementById('conArea').setAttribute("style", "display:none");
 	document.getElementById('newArea').setAttribute("style", "display:none");
+	document.getElementById('singleImageDataArea').setAttribute("style", "display: none");
 
-	var dataPromise = getData('15117244173');
-	dataPromise.success(function(data) {
-		alert(data);
-	});
+	var data = getData('15117244173');
 });
 
 $('#btnPixr').click(function() {
@@ -71,6 +72,8 @@ $('#btnPixr').click(function() {
 	document.getElementById('tranArea').setAttribute("style", "display:none");
 	document.getElementById('conArea').setAttribute("style", "display:none");
 	document.getElementById('newArea').setAttribute("style", "display:block");
+	document.getElementById('singleImageDataArea').setAttribute("style", "display: none");
+
 	fetchAllImages();
 	return false;
 })
@@ -82,6 +85,7 @@ $('#btnTran').click(function() {
 	document.getElementById('tranArea').setAttribute("style", "display:block");
 	document.getElementById('conArea').setAttribute("style", "display:none");
 	document.getElementById('newArea').setAttribute("style", "display:none");
+	document.getElementById('singleImageDataArea').setAttribute("style", "display: none");
 
 	return false;
 })
@@ -93,30 +97,53 @@ $('#btnCont').click(function() {
 	document.getElementById('tranArea').setAttribute("style", "display:none");
 	document.getElementById('conArea').setAttribute("style", "display:block");
 	document.getElementById('newArea').setAttribute("style", "display:none");
+	document.getElementById('singleImageDataArea').setAttribute("style", "display: none");
 
 	return false;
 })
-/*
-function ins(imgname) {
+
+function getData(imgname) {
   console.log('Get data for image: ' + imgname);
 
-  return $.ajax({
+  $.ajax({
       type: 'GET',
       url: rootURL + '/imgdata/' + imgname,
-      dataType: "json"
-			success: function(data) {
-				inspectImage
+      dataType: "json",
+      asynch: false,
+      success: function(data){
+				var imgdata = data.imgdata;
+				console.log(data.imgdata);
+				//currentImg = data.imgdata;
+
+      },
+			error: function(data) {
+				alert("error: " + data);
 			}
   });
+
 }
-*/
-/*
-function makePretty(data) {
-	document.getElementById('field2').setAttribute("style", "background-color: " + data.rval);
-	document.getElementById('field3').setAttribute("style", "background-color: " + data.gval);
-	document.getElementById('field4').setAttribute("style", "background-color: " + data.bval);
+
+function getDataOld(imgname) {
+  console.log('Get data for image: ' + imgname);
+
+  $.ajax({
+      type: 'GET',
+      url: rootURL + '/imgdata/' + imgname,
+      dataType: "json",
+      asynch: false,
+      success: function(data){
+				var imgdata = data.imgdata;
+				console.log(data.imgdata);
+				currentImg = data.imgdata;
+				//makePretty(imgdata);
+
+      },
+			error: function(data) {
+				alert("error: " + data);
+			}
+  });
+
 }
-*/
 /* //not in use currently
 function addData() {
 	console.log('addNewUser');
@@ -184,18 +211,32 @@ function inspectImage(image) {
 	var split_dot = split_image[split_image.length - 1].split(".");
 	var imgname = split_dot[0];
 	console.log(imgname);
+	console.log("attempting to get data");
 	$.ajax({
       type: 'GET',
       url: rootURL + '/imgdata/' + imgname,
       dataType: "json",
-			success: function(data) {
-				var data = data.imgdata;
-				console.log(data);
-				document.getElementById('show1').setAttribute("style", "background-color: " + data.rmode);
-				document.getElementById('show2').setAttribute("style", "background-color: " + data.gmode);
-				document.getElementById('show3').setAttribute("style", "background-color: " + data.bmode);
+      success: function(data){
+				var imgdata = data.imgdata;
+				console.log(data.imgdata);
+				document.getElementById('show1').setAttribute("style", "background-color: " + imgdata.rmode);
+				document.getElementById('show2').setAttribute("style", "background-color: " + imgdata.gmode);
+				document.getElementById('show3').setAttribute("style", "background-color: " + imgdata.bmode);
+
+
+
+      },
+			error: function(data) {
+				alert("error: " + data);
 			}
-	});
+  });
+
+
+
+
+
+	
+
 }
 
 function addUser() {
@@ -246,7 +287,7 @@ function upload() {
 		contentType: false,
 		processData: false,
 		success: function(data, textStatus, jqXHR) {
-			//alert(data);
+			alert(data);
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
 			alert('upload error: ' + textStatus + '\nerror: ' + errorThrown);
