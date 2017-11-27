@@ -3,9 +3,6 @@ import sys
 import os
 import time
 import numpy as np
-import scipy
-import scipy.misc
-import scipy.cluster
 from PIL import Image, ImageFilter
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
