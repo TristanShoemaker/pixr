@@ -14,25 +14,20 @@ def matGetImg(path):
 def pilGetImg(path):
     return Image.open(path)
 
-def lummapfunc(path,colour):
+def lummapfunc(path):
     img = matGetImg(path)
 
-    if colour == 'r':
-        img = img[:,:,0]
-    if colour == 'g':
-        img = img[:,:,1]
-    if colour == 'b':
-        img = img[:,:,2]
+    for i in range(0,3):
+        fig = plt.imshow(img[:,:,i], cmap='hot')
+        #plt.colorbar(fig,fraction=0.046, pad=0.04)
+        plt.axis('off')
+        fig.axes.get_xaxis().set_visible(False)
+        fig.axes.get_yaxis().set_visible(False)
 
-    fig = plt.imshow(img, cmap='hot')
-    plt.colorbar(fig,fraction=0.046, pad=0.04)
-    plt.axis('off')
-    fig.axes.get_xaxis().set_visible(False)
-    fig.axes.get_yaxis().set_visible(False)
+        pathHead, pathTail = os.path.split(path)
+        newPath = path[:-4] + '_analysis/' + pathTail[:-4] + '_lummap' + '_' + str(i) + '.png'
+        plt.savefig(newPath, bbox_inches='tight', pad_inches = 0)
 
-    pathHead, pathTail = os.path.split(path)
-    newPath = path[:-4] + '_analysis/' + pathTail[:-4] + '_lummap' + '_' + colour + '.png'
-    plt.savefig(newPath, bbox_inches='tight', pad_inches = 0)
     print('success')
 
 def contourfunc(path):
@@ -138,7 +133,7 @@ if __name__ ==  "__main__":
 
     parser.add_argument('path')
     parser.add_argument('--masterdata',action='store_true',help='get all image data')
-    parser.add_argument('--lummap',help='luminosity map of r, g, or b')
+    parser.add_argument('--lummap',action='store_true',help='luminosity map r, g, and b')
     parser.add_argument('--contour',action='store_true',help='image filter contour')
     parser.add_argument('--median',action='store_true',help='median colour')
     parser.add_argument('--cintensity',help='intensity of specfic color r, g, or b')
@@ -162,7 +157,7 @@ if __name__ ==  "__main__":
         masterfunc(filePath)
 
     if args.lummap:
-        lummapfunc(filePath,args.lummap)
+        lummapfunc(filePath)
 
     if args.contour:
         contourfunc(filePath)

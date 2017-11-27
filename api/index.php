@@ -17,7 +17,7 @@ $app->get('/display', 'display');
 $app->get('/imgdata/{imgname}', 'getData');
 $app->delete('/deleteimg/{imgname}','deleteImg');
 $app->delete('/deleteusr/{usrname}','deleteUsr');
-$app->get('/analyze/{flag}', 'analyze')
+$app->get('/analyze/{flag}', 'analyze');
 $app->get('/getAll', 'getAllImages');
 
 $app->run();
