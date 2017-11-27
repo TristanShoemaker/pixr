@@ -102,6 +102,7 @@ $('#btnCont').click(function() {
 	return false;
 })
 
+
 function getData(imgname) {
   console.log('Get data for image: ' + imgname);
 
@@ -231,12 +232,6 @@ function inspectImage(image) {
 			}
   });
 
-
-
-
-
-	
-
 }
 
 function addUser() {
@@ -293,8 +288,4 @@ function upload() {
 			alert('upload error: ' + textStatus + '\nerror: ' + errorThrown);
 		}
 	});
-}
-
-function display() {
-	$('#pic').attr('src', '../images/1.jpg').toggle();
 }

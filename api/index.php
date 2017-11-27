@@ -14,10 +14,10 @@ $app->post('/users', 'addNewUser');
 $app->get('/users','getUser');
 $app->post('/upload', 'upload');
 $app->get('/display', 'display');
-$app->get('/python', 'snek');
 $app->get('/imgdata/{imgname}', 'getData');
 $app->delete('/deleteimg/{imgname}','deleteImg');
 $app->delete('/deleteusr/{usrname}','deleteUsr');
+$app->get('/analyze/{flag}', 'analyze')
 $app->get('/getAll', 'getAllImages');
 
 $app->run();
@@ -29,6 +29,13 @@ function getConnection() {
 	$dbh = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser);
 	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	return $dbh;
+}
+
+function analyze(Request $request, Response $response, $args) {
+	parse_str($args['flag']);
+	$command = 'python ../py/analyze.py ../images/'.$imgname.' '.$flag.' 2>&1';
+	$output = shell_exec($command);
+	echo $output;
 }
 
 function getAllImages() {

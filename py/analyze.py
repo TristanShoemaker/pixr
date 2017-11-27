@@ -34,9 +34,9 @@ def lummapfunc(path,colour):
     fig.axes.get_yaxis().set_visible(False)
 
     pathHead, pathTail = os.path.split(path)
-    newPath = path[:-4] + '_analysis/' + pathTail[:-4] + '_lum' + '_' + colour + '.png'
+    newPath = path[:-4] + '_analysis/' + pathTail[:-4] + '_lummap' + '_' + colour + '.png'
     plt.savefig(newPath, bbox_inches='tight', pad_inches = 0)
-    print(newPath)
+    print('success')
 
 def contourfunc(path):
     img = pilGetImg(path)
@@ -46,12 +46,14 @@ def contourfunc(path):
     pathHead, pathTail = os.path.split(path)
     newPath = path[:-4] + '_analysis/' + pathTail[:-4] + '_contourFilter' + '.png'
     img.save(newPath)
-    print(newPath)
+
+    print('success')
 
 def medianfunc(path):
     img = matGetImg(path)
     median = np.median(img, axis=(0,1))
     median = rgb2hex(median)
+
     return median
 
 def cintensityfunc(path,colour):
@@ -75,7 +77,8 @@ def meanfunc(path):
     img = matGetImg(path)
     mean = np.mean(img, axis=(0,1))
     mean = rgb2hex(mean)
-    return  mean
+
+    return mean
 
 def freqfunc(path):
     im = Image.open(path)
@@ -97,6 +100,8 @@ def freqfunc(path):
     pathHead, pathTail = os.path.split(path)
     newPath = path[:-4] + '_analysis/' + pathTail[:-4] + '_freq' + '.png'
     plt.savefig(newPath)
+
+    return 'success'
 
 def modefunc(path,colour):
     im = Image.open(path)
