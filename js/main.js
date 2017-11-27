@@ -58,7 +58,10 @@ $('#btnData').click(function() {
 	document.getElementById('conArea').setAttribute("style", "display:none");
 	document.getElementById('newArea').setAttribute("style", "display:none");
 
-	var data = getData('15117244173');
+	var dataPromise = getData('15117244173');
+	dataPromise.success(function(data) {
+		alert(data);
+	});
 });
 
 $('#btnPixr').click(function() {
@@ -93,34 +96,27 @@ $('#btnCont').click(function() {
 
 	return false;
 })
-
-function getData(imgname) {
+/*
+function ins(imgname) {
   console.log('Get data for image: ' + imgname);
 
-  $.ajax({
+  return $.ajax({
       type: 'GET',
       url: rootURL + '/imgdata/' + imgname,
-      dataType: "json",
-      asynch: false,
-      success: function(data){
-				var imgdata = data.imgdata;
-				console.log(data.imgdata);
-				currentImg = data.imgdata;
-				//makePretty(imgdata);
-
-      },
-			error: function(data) {
-				alert("error: " + data);
+      dataType: "json"
+			success: function(data) {
+				inspectImage
 			}
   });
-
 }
-
+*/
+/*
 function makePretty(data) {
 	document.getElementById('field2').setAttribute("style", "background-color: " + data.rval);
 	document.getElementById('field3').setAttribute("style", "background-color: " + data.gval);
 	document.getElementById('field4').setAttribute("style", "background-color: " + data.bval);
 }
+*/
 /* //not in use currently
 function addData() {
 	console.log('addNewUser');
@@ -188,12 +184,18 @@ function inspectImage(image) {
 	var split_dot = split_image[split_image.length - 1].split(".");
 	var imgname = split_dot[0];
 	console.log(imgname);
-	getData(imgname);
-	console.log(currentImg);
-	document.getElementById('show1').setAttribute("style", "background-color: " + currentImg.rmode);
-	document.getElementById('show2').setAttribute("style", "background-color: " + currentImg.gmode);
-	document.getElementById('show3').setAttribute("style", "background-color: " + currentImg.bmode);
-
+	$.ajax({
+      type: 'GET',
+      url: rootURL + '/imgdata/' + imgname,
+      dataType: "json",
+			success: function(data) {
+				var data = data.imgdata;
+				console.log(data);
+				document.getElementById('show1').setAttribute("style", "background-color: " + data.rmode);
+				document.getElementById('show2').setAttribute("style", "background-color: " + data.gmode);
+				document.getElementById('show3').setAttribute("style", "background-color: " + data.bmode);
+			}
+	});
 }
 
 function addUser() {

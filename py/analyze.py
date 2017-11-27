@@ -102,16 +102,16 @@ def modefunc(path,colour):
     im = Image.open(path)
     histo = im.histogram()
     histo[512] = 0;
-    
+
     if colour == 'r':
         histo = histo[0:255]
-        value = rgb2hex([max(xrange(len(histo)), key=histo.__getitem__) / 255.0,0,0])
+        value = rgb2hex([max(range(len(histo)), key=histo.__getitem__) / 255.0,0,0])
     if colour == 'g':
         histo = histo[256:511]
-        value = rgb2hex([0,max(xrange(len(histo)), key=histo.__getitem__) / 255.0,0])
+        value = rgb2hex([0,max(range(len(histo)), key=histo.__getitem__) / 255.0,0])
     if colour == 'b':
         histo = histo[512:767]
-        value = rgb2hex([0,0,max(xrange(len(histo)), key=histo.__getitem__) / 255.0])
+        value = rgb2hex([0,0,max(range(len(histo)), key=histo.__getitem__) / 255.0])
 
     return value
 
