@@ -36,7 +36,10 @@ function analyze(Request $request, Response $response, $args) {
 	if(! file_exists('../images/'.$imgname.'_analysis/'.$imgname.'_'.$flag.'.png')) {
 		$command = 'python ../py/analyze.py ../images/'.$imgname.' --'.$flag.' 2>&1';
 		$output = shell_exec($command);
-		echo $output;
+		echo json_encode($output);
+	}
+	else {
+		echo json_encode('file already made');
 	}
 }
 

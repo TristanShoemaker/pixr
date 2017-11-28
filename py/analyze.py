@@ -18,9 +18,20 @@ def lummapfunc(path):
     img = matGetImg(path)
 
     for i in range(0,3):
-        fig = plt.imshow(img[:,:,i], cmap='hot')
+        if i == 0:
+            cmaps='YlOrRd'
+            #title='Red Luminosity'
+        if i == 1:
+            cmaps='Greens'
+            #title='Green Luminosity'
+        if i == 2:
+            cmaps='Blues'
+            #title='Blue Luminosity'
+
+        fig = plt.imshow(img[:,:,i], cmap=cmaps)
         #plt.colorbar(fig,fraction=0.046, pad=0.04)
         plt.axis('off')
+        #plt.title(title)
         fig.axes.get_xaxis().set_visible(False)
         fig.axes.get_yaxis().set_visible(False)
 
@@ -36,7 +47,7 @@ def contourfunc(path):
     img = img.filter(ImageFilter.CONTOUR)
 
     pathHead, pathTail = os.path.split(path)
-    newPath = path[:-4] + '_analysis/' + pathTail[:-4] + '_contourFilter' + '.png'
+    newPath = path[:-4] + '_analysis/' + pathTail[:-4] + '_contour' + '.png'
     img.save(newPath)
 
     print('success')
@@ -96,21 +107,80 @@ def freqfunc(path):
     return 'success'
 
 def modefunc(path,colour):
+    BINSIZE = 32
+    bins = []
+    bincolours = range(BINSIZE/2,255,BINSIZE)
     im = Image.open(path)
     histo = im.histogram()
-    histo[512] = 0;
+
+    histo[512] = 0
 
     if colour == 'r':
         histo = histo[0:255]
-        value = rgb2hex([max(range(len(histo)), key=histo.__getitem__) / 255.0,0,0])
+        for i in range(0,256/BINSIZE):
+            bins.append(sum(histo[(i * BINSIZE):(((i + 1) * BINSIZE) - 1)]))
+        colour = bincolours[max(range(len(bins)), key=bins.__getitem__)] / 255.0
+        value = rgb2hex([colour,0,0])
     if colour == 'g':
-        histo = histo[256:511]
-        value = rgb2hex([0,max(range(len(histo)), key=histo.__getitem__) / 255.0,0])
+        histo = histo[256:512]
+        for i in range(0,256/BINSIZE):
+            bins.append(sum(histo[(i * BINSIZE):(((i + 1) * BINSIZE) - 1)]))
+        colour = bincolours[max(range(len(bins)), key=bins.__getitem__)] / 255.0
+        value = rgb2hex([0,colour,0])
     if colour == 'b':
         histo = histo[512:767]
-        value = rgb2hex([0,0,max(range(len(histo)), key=histo.__getitem__) / 255.0])
+        for i in range(0,256/BINSIZE):
+            bins.append(sum(histo[(i * BINSIZE):(((i + 1) * BINSIZE) - 1)]))
+        colour = bincolours[max(range(len(bins)), key=bins.__getitem__)] / 255.0
+        value = rgb2hex([0,0,colour])
 
+    print value
     return value
+
+def histofunc(path):
+    BINSIZE = 32
+    bincolours = range(BINSIZE/2,255,BINSIZE)
+    im = Image.open(path)
+    histo = im.histogram()
+    histo[512] = 0
+
+    histo = histo[0:255]
+    bins = []
+    fig1 = plt.figure()
+    for i in range(0,256/BINSIZE):
+        bins.append(sum(histo[(i * BINSIZE):(((i + 1) * BINSIZE) - 1)]))
+    barlist = plt.bar(range(0,8),bins)
+    for i in range(0,256/BINSIZE):
+        barlist[i].set_color(rgb2hex([bincolours[i]/255.0,0,0]))
+    pathHead, pathTail = os.path.split(path)
+    newPath = path[:-4] + '_analysis/' + pathTail[:-4] + '_histo' + '_0' + '.png'
+    plt.savefig(newPath, bbox_inches='tight', pad_inches = 0)
+
+    histo = im.histogram()
+    histo = histo[256:511]
+    bins = []
+    fig2 = plt.figure()
+    for i in range(0,256/BINSIZE):
+        bins.append(sum(histo[(i * BINSIZE):(((i + 1) * BINSIZE) - 1)]))
+    barlist2 = plt.bar(range(0,8),bins)
+    for i in range(0,256/BINSIZE):
+        barlist2[i].set_color(rgb2hex([0,bincolours[i]/255.0,0]))
+    pathHead, pathTail = os.path.split(path)
+    newPath = path[:-4] + '_analysis/' + pathTail[:-4] + '_histo' + '_1' + '.png'
+    plt.savefig(newPath, bbox_inches='tight', pad_inches = 0)
+
+    histo = im.histogram()
+    histo = histo[512:767]
+    bins = []
+    fig3 = plt.figure()
+    for i in range(0,256/BINSIZE):
+        bins.append(sum(histo[(i * BINSIZE):(((i + 1) * BINSIZE) - 1)]))
+    barlist3 = plt.bar(range(0,8),bins)
+    for i in range(0,256/BINSIZE):
+        barlist3[i].set_color(rgb2hex([0,0,bincolours[i]/255.0]))
+    pathHead, pathTail = os.path.split(path)
+    newPath = path[:-4] + '_analysis/' + pathTail[:-4] + '_histo' + '_2' + '.png'
+    plt.savefig(newPath, bbox_inches='tight', pad_inches = 0)
 
 def masterfunc(path):
     pathHead, pathTail = os.path.split(path)
@@ -140,6 +210,7 @@ if __name__ ==  "__main__":
     parser.add_argument('--mean',action='store_true',help='mean colour')
     parser.add_argument('--freq',action='store_true',help='generate colour frequency plot')
     parser.add_argument('--mode',help='mode colour of r, g or b')
+    parser.add_argument('--histo',action="store_true",help="histograms of r g and b")
 
     args = parser.parse_args()
     filePath = args.path
@@ -176,3 +247,6 @@ if __name__ ==  "__main__":
 
     if args.mode:
         modefunc(filePath,args.mode)
+
+    if args.histo:
+        histofunc(filePath)
