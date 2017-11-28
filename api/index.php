@@ -14,11 +14,8 @@ $app->post('/users', 'addNewUser');
 $app->get('/users','getUser');
 $app->post('/upload', 'upload');
 $app->get('/display', 'display');
+$app->get('/python', 'snek');
 $app->get('/imgdata/{imgname}', 'getData');
-$app->delete('/deleteimg/{imgname}','deleteImg');
-$app->delete('/deleteusr/{usrname}','deleteUsr');
-$app->get('/analyze/{flag}', 'analyze');
-$app->get('/getAll', 'getAllImages');
 
 $app->run();
 
@@ -29,52 +26,6 @@ function getConnection() {
 	$dbh = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser);
 	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	return $dbh;
-}
-
-function analyze(Request $request, Response $response, $args) {
-	parse_str($args['flag']);
-	if(! file_exists('../images/'.$imgname.'_analysis/'.$imgname.'_'.$flag.'.png')) {
-		$command = 'python ../py/analyze.py ../images/'.$imgname.' --'.$flag.' 2>&1';
-		$output = shell_exec($command);
-		echo json_encode($output);
-	}
-	else {
-		echo json_encode('file already made');
-	}
-}
-
-function getAllImages() {
-	$directory = '../images/';
-	$files = glob($directory."*.png");
-	echo '{"filename": ' . json_encode($files) .'}';
-}
-
-function deleteUsr(Request $request, Response $response, $args) { //not in js
-	$name = $args['usrname'];
-	$sql = "DELETE FROM users WHERE name=:name";
-	try {
-		$db = getConnection();
-		$stmt = $db->prepare($sql);
-		$stmt->bindParam("name", $name);
-		$stmt->execute();
-		$db = null;
-	} catch(PDOException $e) {
-		echo '{"error":{"text":'. $e->getMessage() .'}}';
-	}
-}
-
-function deleteImg(Request $request, Response $response, $args) { //not in js
-	$name = $args['imgname'];
-	$sql = "DELETE FROM imgdata WHERE name=:name";
-	try {
-		$db = getConnection();
-		$stmt = $db->prepare($sql);
-		$stmt->bindParam("name", $name);
-		$stmt->execute();
-		$db = null;
-	} catch(PDOException $e) {
-		echo '{"error":{"text":'. $e->getMessage() .'}}';
-	}
 }
 
 function getData(Request $request, Response $response, $args){
@@ -99,19 +50,16 @@ function addData(String $value) {
 	//echo $request->getParam('name');
 	parse_str($value);
 
-	$sql = "INSERT INTO imgdata (imgname, mean, median, rmean, gmean, bmean, rmode, gmode, bmode) VALUES (:imgname, :mean, :median, :rmean, :gmean, :bmean, :rmode, :gmode, :bmode)";
+	$sql = "INSERT INTO imgdata (imgname, mean, median, rval, gval, bval) VALUES (:imgname, :mean, :median, :rval, :gval, :bval)";
 	try {
 		$db = getConnection();
 		$stmt = $db->prepare($sql);
 		$stmt->bindParam("imgname", $imgname);
 		$stmt->bindParam("mean", $mean);
 		$stmt->bindParam("median", $median);
-		$stmt->bindParam("rmean", $rmean);
-		$stmt->bindParam("gmean", $gmean);
-		$stmt->bindParam("bmean", $bmean);
-		$stmt->bindParam("rmode", $rmode);
-		$stmt->bindParam("gmode", $gmode);
-		$stmt->bindParam("bmode", $bmode);
+		$stmt->bindParam("rval", $rval);
+		$stmt->bindParam("gval", $gval);
+		$stmt->bindParam("bval", $bval);
 		$stmt->execute();
 		$db = null;
 		//echo json_encode($newuser);
@@ -121,9 +69,8 @@ function addData(String $value) {
 }
 
 function upload(Request $request, Response $response) {
-	$imgpath = '../images/'.time();
+	$imgpath = '../images/'.time().$_FILES['image']['name'];
 	move_uploaded_file($_FILES['image']['tmp_name'],$imgpath); //move(temp_name_in_system, to: directory/
-	//$command = '//anaconda/bin/python ../py/analyze.py '.$imgpath.' --masterdata 2>&1';
 	$command = 'python ../py/analyze.py '.$imgpath.' --masterdata 2>&1';
 	$output = shell_exec($command);
 	addData($output);

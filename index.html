@@ -15,14 +15,14 @@
 <body>
 
 		<div style="color: white; font-size: 12px; background-color: purple; padding: 2px; overflow: auto;">
-		<button class="button logo" id="btnPixr" style="width: 25%">pixr</button>
+		<button class="button logo" id="btnPixr">pixr</button>
 		<p style="text-align: right; float: right;"> hello. <a href="">sign out</a></p>
 		</div>
 
-		<div style="color: white; background-color: purple; float: left; width: 25%; height: 100vh; padding: 20px">
-			<button class="button" id="btnNew">what's new</button></br>
+		<div style="color: white; background-color: purple; float: left; width: 25%; padding: 20px">
+			<button class="button" id="btnNew">new</button></br>
 			<button class="button" id="btnData">data</button></br>
-			<button class="button" id="btnUpl">upload</button></br>
+			<button class="button" id="btnAnal">analyse</button></br>
 			<button class="button" id="btnTran">transmogrify</button></br>
 			<button class="button" id="btnCont">contributors</button></br>
 
@@ -36,38 +36,24 @@
 		</div>
 
 
-		<div id="uplArea" style="display: none">
-			<form enctype="multipart/form-data" name="uploadForm" id="upload">
-				<input id="image" name="image" type="file"/>
-				<input type="button" value="Upload" id="upBtn"/>
-			</form>
+		<div id="analArea" style="display: none">Welcome to the anal area</div>
+		<div id="tranArea" style="display:none">transmogrify!</div>
+		<div id="conArea" style="display: none">contributors</div>
 
-			<img id="pic" height="300" style="border: 0px rgba(0,0,0,0)" />
+		<div id="newArea" style="display: none">
+
+			<form enctype="multipart/form-data" name="uploadForm" id="upload">
+			<input id="image" name="image" type="file"/>
+			<input type="button" value="Upload" id="upBtn"/><br/>
+
+			<img id="pic" height="300" />
 			<div>
 				<button id="btnDisplayImage">pics pls</button>
 			</div>
+		</form>
 		</div>
 
-
-		<div id="tranArea" style="display:none">transmogrify!</div>
-		<div id="conArea" style="display: none">contributors</div>
-		<div id="newArea" style="display: block">
-		<div>
-		<p> See the news in the hues!
-		</p>
-		</div>
-		<div id="newAreaforImages"></div>
-
-		</div>
-
-		<div id="singleImageDataArea" style="display: none">
-			<img id="singleImage"/>
-			<div id="show1" class="box"></div>
-			<div id="show2" class="box"></div>
-			<div id="show3" class="box"></div>
-		</div>
-
-		<div id="mainArea" style="display: none">
+		<div id="mainArea" style="display: block">
 
 
 <form id="newUserForm">
@@ -86,8 +72,6 @@
 </div>
 <div id="textArea"></div>
 
-
-<div class="box" style="background-colour: var(--colour1)"></div>
 
 
 
