@@ -13,8 +13,6 @@ $('#btnGetUsers').click(function() {
   return false;
 });
 
-
-
 $('#upBtn').click(function() {
 	upload();
 	return false;
@@ -61,8 +59,6 @@ $('#btnData').click(function() {
 	document.getElementById('newArea').setAttribute("style", "display:none");
 
 	var data = getData('3');
-
-	
 });
 
 $('#btnPixr').click(function() {
@@ -72,7 +68,7 @@ $('#btnPixr').click(function() {
 	document.getElementById('tranArea').setAttribute("style", "display:none");
 	document.getElementById('conArea').setAttribute("style", "display:none");
 	document.getElementById('newArea').setAttribute("style", "display:none");
-	
+
 	return false;
 })
 
@@ -83,9 +79,8 @@ $('#btnTran').click(function() {
 	document.getElementById('tranArea').setAttribute("style", "display:block");
 	document.getElementById('conArea').setAttribute("style", "display:none");
 	document.getElementById('newArea').setAttribute("style", "display:none");
-	
-	return false;
 
+	return false;
 })
 
 $('#btnCont').click(function() {
@@ -97,11 +92,10 @@ $('#btnCont').click(function() {
 	document.getElementById('newArea').setAttribute("style", "display:none");
 
 	return false;
-
 })
 
 function getData(imgname) {
-  console.log('getDBInfo');
+  console.log('Get data for image: ' + imgname);
 
   $.ajax({
       type: 'GET',
@@ -111,24 +105,23 @@ function getData(imgname) {
 				var imgdata = data.imgdata;
 				console.log(data.imgdata);
 				makePretty(imgdata);
-				
+
       },
 			error: function(data) {
 				alert("error: " + data);
 			}
   });
-	
+
 }
 
 function makePretty(data) {
 	document.getElementById('field2').setAttribute("style", "background-color: " + data.rval);
 	document.getElementById('field3').setAttribute("style", "background-color: " + data.gval);
 	document.getElementById('field4').setAttribute("style", "background-color: " + data.bval);
-
 }
-
-function addData() { //not in use?
-	//console.log('addNewUser');
+/* //not in use currently
+function addData() {
+	console.log('addNewUser');
 	$.ajax({
 		type: 'POST',
 		contentType: 'application/json',
@@ -143,7 +136,8 @@ function addData() { //not in use?
 		}
 	});
 }
-
+*/
+/* //not in use currently
 function snek() {
 	$.ajax({
 		type: 'GET',
@@ -157,17 +151,18 @@ function snek() {
 		}
 	});
 }
+*/
 
 function addUser() {
-	//console.log('addNewUser');
+	console.log('adding new user form:' + userFormToJson());
 	$.ajax({
 		type: 'POST',
 		contentType: 'application/json',
 		url: rootURL + '/users',
 		dataType: "text",
-		data: formToJSON(),
+		data: userFormToJSON(),
 		success: function(data, textStatus, jqXHR) {
-			alert(data);
+			//alert(data);
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
 			alert('addUser error: ' + textStatus);
@@ -175,7 +170,7 @@ function addUser() {
 	});
 }
 
-function formToJSON() {
+function userFormToJSON() {
 	return JSON.stringify({
 		"name": $('#newUserName').val(),
 		"pass": $('#newUserPass').val()
@@ -183,14 +178,12 @@ function formToJSON() {
 }
 
 function getUser() {
-  console.log('getUser');
+  console.log('get User');
   $.ajax({
       type: 'GET',
       url: rootURL + '/users',
       dataType: "json",
       success: function(data){
-        //var list = data == null ? [] : (data.users instanceof Array ? data.users : [data.users]);
-
         $('#textArea').text(data.users[1].name);
       }
   });
@@ -199,7 +192,6 @@ function getUser() {
 function upload() {
 	var file = document.getElementById('image').files[0];
 	var formData = new FormData($('#upload')[0]);
-	//formData.append('file', file);
 
 	$.ajax({
 		url: rootURL + '/upload',
@@ -209,14 +201,12 @@ function upload() {
 		contentType: false,
 		processData: false,
 		success: function(data, textStatus, jqXHR) {
-			alert(data);
+			//alert(data);
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
 			alert('upload error: ' + textStatus + '\nerror: ' + errorThrown);
 		}
-
 	});
-
 }
 
 function display() {
