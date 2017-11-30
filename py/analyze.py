@@ -86,10 +86,10 @@ def meanfunc(path):
 def freqfunc(path):
     im = Image.open(path)
     histo = im.histogram()
-    histor = histo[0:255]
-    histog = histo[256:511]
-    histob = histo[512:767]
-    histo[512]=0
+    histor = histo[0:254]
+    histog = histo[257:510]
+    histob = histo[513:766]
+    #histo[512]=0
 
     plt.figure()
     plt.gca().set_ylim([0,max(histo)+50])
@@ -134,7 +134,7 @@ def modefunc(path,colour):
         colour = bincolours[max(range(len(bins)), key=bins.__getitem__)] / 255.0
         value = rgb2hex([0,0,colour])
 
-    print value
+    #print value
     return value
 
 def histofunc(path):

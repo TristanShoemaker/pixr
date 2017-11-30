@@ -251,7 +251,7 @@ function inspectImage(image) {
 		makeEffect(IMGNAME, "freq")
 		console.log(IMGNAME);
 		return false;
-		
+
 	});
 
 
@@ -343,7 +343,7 @@ function upload() {
 			var parser = data.split("=");
 			var parser2 = parser[1].split("&");
 			var file_str = '../images/' + parser2[0] +'.png';
-			alert(file_str);
+			//alert(file_str);
 
 			inspectImage(file_str);
 		},
