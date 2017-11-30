@@ -14,96 +14,76 @@
 
 <body>
 
-		<div style="color: white; font-size: 12px; background-color: #7a2d99; padding: 2px; height: 100px;">
+	<div style="color: white; font-size: 12px; background-color: #7a2d99; padding: 2px; height: 100px;">
 		<button class="button logo" id="btnPixr" style="width: 15%">pixr</button>
 		<p style="text-align: right; float: right;"> hello. <a href="">sign out</a></p>
-		</div>
+	</div>
 
-		<div style="color: white; background-color: #7a2d99; float: left; width: 15%; height: 100vh; padding: 20px;">
-			<button class="button" id="btnNew">what's new</button></br>
-			<button class="button" id="btnUpl">upload</button></br>
+	<div style="color: white; background-color: #7a2d99; float: left; width: 15%; height: 100vh; padding: 20px;">
+		<button class="button" id="btnNew">what's new</button></br>
+		<button class="button" id="btnUpl">upload</button></br>
+		<button class="button" id="btnCont">contributors</button></br>
+	</div>
 
-			<button class="button" id="btnCont">contributors</button></br>
+	<div id="dataArea" style="display: none">
+		<div id="field1"></div>
+		<div id="field2" class="box"></div>
+		<div id="field3" class="box"></div>
+		<div id="field4" class="box"></div>
+	</div>
 
-		</div>
+	<div id="uplArea" style="display: none">
+		<form enctype="multipart/form-data" name="uploadForm" id="upload">
+			<input id="image" name="image" type="file"/>
+			<input type="button" value="Upload" id="upBtn"/>
+		</form>
+	</div>
 
-		<div id="dataArea" style="display: none">
-			<div id="field1"></div>
-			<div id="field2" class="box"></div>
-			<div id="field3" class="box"></div>
-			<div id="field4" class="box"></div>
-		</div>
+	<div id="tranArea" style="display:none"></div>
 
+	<div id="conArea" style="display: none">contributors</div>
 
-		<div id="uplArea" style="display: none">
-			<form enctype="multipart/form-data" name="uploadForm" id="upload">
-				<input id="image" name="image" type="file"/>
-				<input type="button" value="Upload" id="upBtn"/>
-			</form>
-
-
-		</div>
-
-
-		<div id="tranArea" style="display:none">
-
-
-
-		</div>
-
-		<div id="conArea" style="display: none">contributors</div>
-		<div id="newArea" style="display: block">
-		<div>
-		<p> See the news in the hues!
-		</p>
-		</div>
+	<div id="newArea" style="display: block">
+		<div><p> See the news in the hues!</p></div>
 		<div id="newAreaforImages"></div>
+	</div>
 
-		</div>
+	<div id="singleImageDataArea" style="display: none">
+		<img style="width: 300px" id="singleImage"/>
+		<div id="show1" class="box"></div>
+		<div id="show2" class="box"></div>
+		<div id="show3" class="box"></div>
+		<br/><br/><br/>
 
-		<div id="singleImageDataArea" style="display: none">
-			<img style="width: 300px" id="singleImage"/>
-			<div id="show1" class="box"></div>
-			<div id="show2" class="box"></div>
-			<div id="show3" class="box"></div>
-			<br/><br/><br/>
-
-			<div>
+		<div>
 			<p style="font-size: 40px; color: grey;">Transmogrify:</p><br/>
 			<button class="button2" id="lummap">how luminous!</button> <br/>
 			<button class="button2" id="contour">LINES</button><br/>
 			<button class="button2" id="freq">le freak c'est chic</button>
-			</div>
+		</div>
 			<p>
-			<br/><br/><br/>
+				<br/><br/><br/>
 			</p>
 			<div id="effectDisplayArea" style="float:left; margin: 10px"><br/><br/><br/></div>
+	</div>
 
+	<div id="mainArea" style="display: none">
+
+		<form id="newUserForm">
+			<label>New user: enter name.</label>
+			<input id="newUserName" name="name" type="text"/>
+			<label>Enter password:</label>
+			<input id="newUserPass" name="pass" type="text"/>
+			<button id="btnSave">Boo</button>
+		</form>
+
+		<div>
+			<button id="btnGetUsers">Get Users</button>
 		</div>
 
+		<div id="textArea"></div>
 
-
-		<div id="mainArea" style="display: none">
-
-
-<form id="newUserForm">
-	<label>New user: enter name.</label>
-	<input id="newUserName" name="name" type="text"/>
-
-
-
-	<label>Enter password:</label>
-	<input id="newUserPass" name="pass" type="text"/>
-	<button id="btnSave">Boo</button>
-</form>
-
-<div>
-	<button id="btnGetUsers">Get Users</button>
-</div>
-
-<div id="textArea"></div>
-
-</div>
+	</div>
 
 <script src="/js/main.js"></script>
 </body>
