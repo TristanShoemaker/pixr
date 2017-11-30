@@ -251,7 +251,7 @@ function inspectImage(image) {
 		makeEffect(IMGNAME, "freq")
 		console.log(IMGNAME);
 		return false;
-
+		
 	});
 
 

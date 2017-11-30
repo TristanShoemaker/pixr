@@ -35,8 +35,7 @@ function getConnection() {
 function analyze(Request $request, Response $response, $args) {
 	parse_str($args['flag']);
 	if(! file_exists('../images/'.$imgname.'analysis/'.$imgname.''.$flag.'.png')) {
-		//$command = '//anaconda/bin/python ../py/analyze.py ../images/'.$imgname.' --'.$flag.' 2>&1';
-		$command = 'python ../py/analyze.py ../images/'.$imgname.' --'.$flag.' 2>&1';
+		$command = '//anaconda/bin/python ../py/analyze.py ../images/'.$imgname.' --'.$flag.' 2>&1';
 		$output = shell_exec($command);
 		echo json_encode($output);
 
@@ -125,8 +124,8 @@ function addData(String $value) {
 function upload(Request $request, Response $response) {
 	$imgpath = '../images/'.time();
 	move_uploaded_file($_FILES['image']['tmp_name'],$imgpath); //move(temp_name_in_system, to: directory/
-	//$command = '//anaconda/bin/python ../py/analyze.py '.$imgpath.' --masterdata 2>&1';
-	$command = 'python ../py/analyze.py '.$imgpath.' --masterdata 2>&1';
+	$command = '//anaconda/bin/python ../py/analyze.py '.$imgpath.' --masterdata 2>&1';
+	//$command = 'python ../py/analyze.py '.$imgpath.' --masterdata 2>&1';
 	$output = shell_exec($command);
 	addData($output);
 	echo $output;
