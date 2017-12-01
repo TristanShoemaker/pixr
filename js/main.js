@@ -171,7 +171,7 @@ function fetchAllImages() {
 			$('#newAreaforImages').empty();
 			var rowLength = 5;
 			for (i=0; i<data.filename.length; i++) {
-				newImages += '<img class="grow" src="' +data.filename[i]+ '" onclick="inspectImage(\'' + data.filename[i] + '\')"/>';
+				newImages += '<img class="grow gridimage" src="' +data.filename[i]+ '" onclick="inspectImage(\'' + data.filename[i] + '\')"/>';
 				//console.log(newImages);
 			}
 			$('#newAreaforImages').append(newImages);
@@ -206,7 +206,10 @@ function inspectImage(image) {
 				document.getElementById('show1').setAttribute("style", "background-color: " + imgdata.rmode);
 				document.getElementById('show2').setAttribute("style", "background-color: " + imgdata.gmode);
 				document.getElementById('show3').setAttribute("style", "background-color: " + imgdata.bmode);
-      },
+				document.getElementById('show4').setAttribute("style", "background-color: " + imgdata.rmean);
+				document.getElementById('show5').setAttribute("style", "background-color: " + imgdata.gmean);
+				document.getElementById('show6').setAttribute("style", "background-color: " + imgdata.bmean);
+		  },
 			error: function(data) {
 				alert("error: " + data);
 			}
