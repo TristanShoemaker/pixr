@@ -171,10 +171,9 @@ function fetchAllImages() {
 			$('#newAreaforImages').empty();
 			var rowLength = 5;
 			for (i=0; i<data.filename.length; i++) {
-				newImages += '<img class="item" src="' +data.filename[i]+ '" onclick="inspectImage(\'' + data.filename[i] + '\')"/>';
+				newImages += '<img class="grow" src="' +data.filename[i]+ '" onclick="inspectImage(\'' + data.filename[i] + '\')"/>';
 				//console.log(newImages);
 			}
-
 			$('#newAreaforImages').append(newImages);
 		},
 		error: function(data) {
