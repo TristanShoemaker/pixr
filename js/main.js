@@ -17,13 +17,12 @@ $('#upBtn').click(function() {
 	upload();
 	return false;
 });
-
+/*
 $('#btnDisplayImage').click(function() {
 	display();
 	return false;
 });
-
-
+*/
 
 $('#btnNew').click(function() {
 	document.getElementById('dataArea').setAttribute("style", "display:none");
@@ -119,7 +118,7 @@ function getData(imgname) {
   });
 
 }
-
+/*
 function getDataOld(imgname) {
   console.log('Get data for image: ' + imgname);
 
@@ -141,6 +140,7 @@ function getDataOld(imgname) {
   });
 
 }
+*/
 /* //not in use currently
 function addData() {
 	console.log('addNewUser');
@@ -159,21 +159,6 @@ function addData() {
 	});
 }
 */
-/* //not in use currently
-function snek() {
-	$.ajax({
-		type: 'GET',
-		url: rootURL + '/python',
-		dataType: "text",
-		success: function(data) {
-			alert('python success: '+ data);
-		},
-		error: function(data) {
-			alert("error: " + data);
-		}
-	});
-}
-*/
 
 function fetchAllImages() {
 	$.ajax({
@@ -186,11 +171,10 @@ function fetchAllImages() {
 			$('#newAreaforImages').empty();
 			var rowLength = 5;
 			for (i=0; i<data.filename.length; i++) {
-				//newImages += '<a href="api/inspectImage"> <img src="' +data.filename[i]+ '" style="width:150px;" /></a>';
-				newImages += '<img src="' +data.filename[i]+ '" onclick="inspectImage(\'' + data.filename[i] + '\')"/>';
-
+				newImages += '<img class="item" src="' +data.filename[i]+ '" onclick="inspectImage(\'' + data.filename[i] + '\')"/>';
 				//console.log(newImages);
 			}
+
 			$('#newAreaforImages').append(newImages);
 		},
 		error: function(data) {
@@ -251,7 +235,7 @@ function inspectImage(image) {
 		makeEffect(IMGNAME, "freq")
 		console.log(IMGNAME);
 		return false;
-		
+
 	});
 
 
@@ -352,7 +336,8 @@ function upload() {
 		}
 	});
 }
-
+/*
 function display() {
 	$('#pic').attr('src', '../images/1.jpg').toggle();
 }
+*/
