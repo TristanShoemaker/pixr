@@ -31,7 +31,7 @@ a {
 .buttonlogo {
 	font-size: 50px;
 	font-weight: bold;
-	padding-left: 10px;
+	padding-left: 60px;
 	background-color: inherit;
 	border: none;
 	color: #7a2d99;
@@ -41,6 +41,7 @@ a {
 	float: left;
 	width: 80px;
 	height: 60px;
+	margin-top: 50px
 	margin: 10px;
 	border: 2px solid rgba(0,0,0, 0.2);
 }
@@ -61,6 +62,9 @@ img {
   grid-auto-rows: 150px;
   grid-auto-flow: row dense;
 }
+
+.grow { transition: all .2s ease-in-out; }
+.grow:hover { transform: scale(1.1); }
 
 .grid-image{
 	display: inline-block;
