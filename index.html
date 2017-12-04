@@ -14,12 +14,12 @@
 
 <body>
 
-	<div style="padding-bottom: 30px">
+	<div>
 		<button class="buttonlogo" id="btnPixr" >pixr</button>
 		<p style="text-align: right; float: right;"> hello. <a href="">sign out</a></p>
 	</div>
 
-	<div style="color: white; background-color: #7a2d99; float: left; margin-left: 20px; margin-right: 20px; margin-top: 20px; width: 140px; height: 160px; padding: 20px;">
+	<div style="color: white; background-color: #7a2d99; float: left; margin-left: 20px; margin-top: 20px; width: 160px; height: 160px; padding: 20px;">
 		<button class="button" id="btnNew">New</button></br>
 		<button class="button" id="btnUpl">Upload</button></br>
 		<button class="button" id="btnCont">Contributors</button></br>
@@ -33,7 +33,7 @@
 	</div>
 
 	<div id="uplArea" style="display: none">
-		<form enctype="multipart/form-data" name="uploadForm" id="upload">
+		<form class="upldform" enctype="multipart/form-data" name="uploadForm" id="upload">
 			<input id="image" name="image" type="file"/>
 			<input type="button" value="Upload" id="upBtn"/>
 		</form>
@@ -43,8 +43,7 @@
 
 	<div id="conArea" style="display: none">contributors</div>
 
-	<div class="grid" id="newArea" style="display: block; margin-top:10px;">
-		<!--<div><p> See the news in the hues!</p></div>-->
+	<div class="grid" id="newArea" style="display: flex;">
 		<div id="newAreaforImages"></div>
 	</div>
 

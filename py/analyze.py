@@ -3,7 +3,7 @@ import sys
 import os
 import time
 import numpy as np
-from PIL import Image, ImageFilter
+from PIL import Image, ImageFilter, ImageOps
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 from matplotlib.colors import rgb2hex
@@ -201,6 +201,13 @@ def histofunc(path):
     newPath = path[:-4] + '_analysis/' + pathTail[:-4] + '_histo' + '_2' + '.png'
     plt.savefig(newPath, bbox_inches='tight', pad_inches = 0)
 
+def thumberize(path):
+    img = pilGetImg(path);
+    pathHead, pathTail = os.path.split(path)
+    newPath = path[:-4] + '_thumb.png'
+    #print newPath
+    ImageOps.fit(img, (500,500)).save(newPath)
+
 def masterfunc(path):
     pathHead, pathTail = os.path.split(path)
 
@@ -234,7 +241,7 @@ if __name__ ==  "__main__":
     parser.add_argument('--freq',action='store_true',help='generate colour frequency plot')
     parser.add_argument('--mode',help='mode colour of r, g or b')
     parser.add_argument('--histo',action="store_true",help="histograms of r g and b")
-
+    parser.add_argument('--thumb',action="store_true",help="create thumbnail")
     args = parser.parse_args()
     filePath = args.path
     fileNameNoExt = os.path.splitext(filePath)[0]
@@ -273,3 +280,6 @@ if __name__ ==  "__main__":
 
     if args.histo:
         histofunc(filePath)
+
+    if args.thumb:
+        thumberize(filePath)

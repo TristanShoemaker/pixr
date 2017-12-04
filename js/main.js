@@ -30,7 +30,7 @@ $('#btnNew').click(function() {
 	document.getElementById('uplArea').setAttribute("style", "display:none");
 	document.getElementById('tranArea').setAttribute("style", "display:none");
 	document.getElementById('conArea').setAttribute("style", "display:none");
-	document.getElementById('newArea').setAttribute("style", "display:block");
+	document.getElementById('newArea').setAttribute("style", "display:flex");
 	document.getElementById('singleImageDataArea').setAttribute("style", "display: none");
 
 	fetchAllImages();
@@ -166,13 +166,13 @@ function fetchAllImages() {
 		url: rootURL + '/getAll',
 		dataType: "json",
 		success: function(data) {
-			console.log(data.filename.length);
+			//console.log(data.filename.length);
 			var newImages = "";
 			$('#newAreaforImages').empty();
 			var rowLength = 5;
 			for (i=0; i<data.filename.length; i++) {
-				newImages += '<img class="grow gridimage" src="' +data.filename[i]+ '" onclick="inspectImage(\'' + data.filename[i] + '\')"/>';
-				//console.log(newImages);
+				newImages += '<img class="grow gridimage" src="' + data.filename[i] + '" onclick="inspectImage(\'' + data.filename[i].slice(0,-10) + '.png\')"/>';
+				console.log(data.filename[i]);
 			}
 			$('#newAreaforImages').append(newImages);
 		},
