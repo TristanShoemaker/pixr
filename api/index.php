@@ -101,12 +101,13 @@ function addData(String $value) {
 	//echo $request->getParam('name');
 	parse_str($value);
 
-	$sql = "INSERT INTO imgdata (imgname, mean, median, rmean, gmean, bmean, rmode, gmode, bmode) VALUES (:imgname, :mean, :median, :rmean, :gmean, :bmean, :rmode, :gmode, :bmode)";
+	$sql = "INSERT INTO imgdata (imgname, mean, median, mode, rmean, gmean, bmean, rmode, gmode, bmode, rmedian, gmedian, bmedian) VALUES (:imgname, :mean, :median, :mode, :rmean, :gmean, :bmean, :rmode, :gmode, :bmode, :rmedian, :gmedian, :bmedian)";
 	try {
 		$db = getConnection();
 		$stmt = $db->prepare($sql);
 		$stmt->bindParam("imgname", $imgname);
 		$stmt->bindParam("mean", $mean);
+		$stmt->bindParam("mode", $mode);
 		$stmt->bindParam("median", $median);
 		$stmt->bindParam("rmean", $rmean);
 		$stmt->bindParam("gmean", $gmean);
@@ -114,6 +115,9 @@ function addData(String $value) {
 		$stmt->bindParam("rmode", $rmode);
 		$stmt->bindParam("gmode", $gmode);
 		$stmt->bindParam("bmode", $bmode);
+		$stmt->bindParam("rmedian", $rmedian);
+		$stmt->bindParam("gmedian", $gmedian);
+		$stmt->bindParam("bmedian", $bmedian);
 		$stmt->execute();
 		$db = null;
 		//echo json_encode($newuser);

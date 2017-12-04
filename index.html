@@ -43,45 +43,67 @@
 
 	<div id="conArea" style="display: none">contributors</div>
 
-	<div class="grid" id="newArea" style="display: block; margin-top:10px">
+	<div class="grid" id="newArea" style="display: block; margin-top:10px;">
 		<!--<div><p> See the news in the hues!</p></div>-->
 		<div id="newAreaforImages"></div>
 	</div>
 
 	<div id="singleImageDataArea" style="display: none;">
-		<div style="margin-right: 20px;margin-left: 20px">
+		<div style="margin-right: 20px;margin-left: 20px; order:1">
 			<img style="width: 100%;" id="singleImage"/>
 		</div>
 
+		<div style="display: flex; flex-direction: row; justify-content: space-evenly">
+
 		<div class="info">
-			<h2 style="margin: 10px;">Mode RGB</h1>
-				<div id="show1" class="box"></div>
-				<div id="show2" class="box"></div>
-				<div id="show3" class="box"></div>
+			<h2 class="box" style="margin: 10px;">Mode</h1>
+			<div id="mode" class="box"></div>
+			<div class="box"></div>
+			<div class="box"></div>
 		</div>
-	</br>
-		<div style="clear: left" class="info">
-			<h2 style="margin: 10px;">Mean RGB</h1>
-				<div id="show4" class="box"></div>
-				<div id="show5" class="box"></div>
-				<div id="show6" class="box"></div>
+		<div class="info" >
+			<h2 class="box" style="margin: 10px;">Mode RGB</h1>
+			<div id="rmode" class="box"></div>
+			<div id="gmode" class="box"></div>
+			<div id="bmode" class="box"></div>
 		</div>
-
-		<!--
-		<div id="show1" class="box"></div>
-		<div id="show2" class="box"></div>
-		<div id="show3" class="box"></div>
-
+		<div class="info" >
+			<h2 class="box" style="margin: 10px;">Mean</h1>
+			<div id="mean" class="box"></div>
+			<div class="box"></div>
+			<div class="box"></div>
+		</div>
+		<div class="info" >
+			<h2 class="box" style="margin: 10px;">Mean RGB</h1>
+			<div id="rmean" class="box"></div>
+			<div id="gmean" class="box"></div>
+			<div id="bmean" class="box"></div>
+		</div>
+		<div class="info" >
+			<h2 class="box" style="margin: 10px;">Median</h1>
+			<div id="median" class="box"></div>
+			<div class="box"></div>
+			<div class="box"></div>
+		</div>
+		<div class="info" >
+			<h2 class="box" style="margin: 10px;">Median RGB</h1>
+			<div id="rmedian" class="box"></div>
+			<div id="gmedian" class="box"></div>
+			<div id="bmedian" class="box"></div>
+		</div>
+	</div>
+	<div style="display: flex; flex-direction: column">
 		<div>
-			<button class="button2" id="lummap">how luminous!</button> <br/>
-			<button class="button2" id="contour">LINES</button><br/>
-			<button class="button2" id="freq">le freak c'est chic</button>
+			<button id="lummap">Luminosity Map</button>
 		</div>
-			<p>
-				<br/><br/><br/>
-			</p>
-			<div id="effectDisplayArea" style="float:left; margin: 10px"><br/><br/><br/></div>
-		-->
+		<div>
+			<button id="contour">Contour Map</button>
+		</div>
+		<div>
+			<button id="freq">Color Frequency</button>
+		</div>
+	</div>
+		<div id="effectDisplayArea"></div>
 	</div>
 
 	<div id="mainArea" style="display: none">

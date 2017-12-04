@@ -203,12 +203,18 @@ function inspectImage(image) {
       success: function(data){
 				var imgdata = data.imgdata;
 				console.log(data.imgdata);
-				document.getElementById('show1').setAttribute("style", "background-color: " + imgdata.rmode);
-				document.getElementById('show2').setAttribute("style", "background-color: " + imgdata.gmode);
-				document.getElementById('show3').setAttribute("style", "background-color: " + imgdata.bmode);
-				document.getElementById('show4').setAttribute("style", "background-color: " + imgdata.rmean);
-				document.getElementById('show5').setAttribute("style", "background-color: " + imgdata.gmean);
-				document.getElementById('show6').setAttribute("style", "background-color: " + imgdata.bmean);
+				document.getElementById('rmode').setAttribute("style", "background-color: " + imgdata.rmode);
+				document.getElementById('gmode').setAttribute("style", "background-color: " + imgdata.gmode);
+				document.getElementById('bmode').setAttribute("style", "background-color: " + imgdata.bmode);
+				document.getElementById('rmean').setAttribute("style", "background-color: " + imgdata.rmean);
+				document.getElementById('gmean').setAttribute("style", "background-color: " + imgdata.gmean);
+				document.getElementById('bmean').setAttribute("style", "background-color: " + imgdata.bmean);
+				document.getElementById('rmedian').setAttribute("style", "background-color: " + imgdata.rmedian);
+				document.getElementById('gmedian').setAttribute("style", "background-color: " + imgdata.gmedian);
+				document.getElementById('bmedian').setAttribute("style", "background-color: " + imgdata.bmedian);
+				document.getElementById('mode').setAttribute("style", "background-color: " + imgdata.mode);
+				document.getElementById('mean').setAttribute("style", "background-color: " + imgdata.mean);
+				document.getElementById('median').setAttribute("style", "background-color: " + imgdata.median);
 		  },
 			error: function(data) {
 				alert("error: " + data);
@@ -218,18 +224,13 @@ function inspectImage(image) {
 	return;
 }
 
-
-
 	$('#lummap').click(function() {
-
 		makeEffect(IMGNAME, "lummap")
-		//imgname = "";
 		return false;
 	});
 
 	$('#contour').click(function() {
 		makeEffect(IMGNAME, "contour")
-		//imgname = "";
 		return false;
 	});
 
@@ -237,11 +238,7 @@ function inspectImage(image) {
 		makeEffect(IMGNAME, "freq")
 		console.log(IMGNAME);
 		return false;
-
 	});
-
-
-
 
 function makeEffect(imgname, flag) {
 	$('#effectDisplayArea').empty();
@@ -260,11 +257,11 @@ function makeEffect(imgname, flag) {
 			console.log(directory);
 			if(flag == "lummap") {
 				for (i=0; i<3; i++) {
-					effectImgs += '<img class="imgEffectMult" src="' +directory + '_' + i + '.png" />';
+					effectImgs += '<img class="imgEffect" src="' + directory + '_' + i + '.png" />';
 				}
 			}
 			else {
-				effectImgs += '<img class="imgEffect" src="' +directory + '.png" style="width: 400px:"/>';
+				effectImgs += '<img class="imgEffect" src="' + directory + '.png" style="width: 400px:"/>';
 			}
 			console.log(effectImgs);
 
@@ -274,8 +271,6 @@ function makeEffect(imgname, flag) {
 			console.log('error: ' + data);
 		}
 	});
-
-
 }
 
 function addUser() {

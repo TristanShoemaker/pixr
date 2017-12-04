@@ -59,17 +59,15 @@ def medianfunc(path,colour='none'):
         median = rgb2hex(median)
     if colour == 'r':
         img = img[:,:,0]
-        mean = rgb2hex([np.median(img, axis=(0,1)),0,0])
+        median = rgb2hex([np.median(img, axis=(0,1)),0,0])
 
     if colour == 'g':
         img = img[:,:,1]
-        mean = rgb2hex([0,np.median(img, axis=(0,1)),0])
+        median = rgb2hex([0,np.median(img, axis=(0,1)),0])
 
     if colour == 'b':
         img = img[:,:,2]
-        mean = rgb2hex([0,0,np.median(img, axis=(0,1))])
-
-    return mean
+        median = rgb2hex([0,0,np.median(img, axis=(0,1))])
 
     return median
 
@@ -128,19 +126,13 @@ def modefunc(path,colour='none'):
     histo = im.histogram()
 
     histo[512] = 0
-    if colour = 'none':
+    if colour == 'none':
         histor = histo[0:255]
-        for i in range(0,256//BINSIZE):
-            bins.append(sum(histor[(i * BINSIZE):(((i + 1) * BINSIZE) - 1)]))
-        colourr = bincolours[max(range(len(bins)), key=bins.__getitem__)] / 255.0
-        histob = histo[256:512]
-        for i in range(0,256//BINSIZE):
-            bins.append(sum(histob[(i * BINSIZE):(((i + 1) * BINSIZE) - 1)]))
-        colourb = bincolours[max(range(len(bins)), key=bins.__getitem__)] / 255.0
-        histog = histo[512:767]
-        for i in range(0,256//BINSIZE):
-            bins.append(sum(histog[(i * BINSIZE):(((i + 1) * BINSIZE) - 1)]))
-        colourg = bincolours[max(range(len(bins)), key=bins.__getitem__)] / 255.0
+        colourr = max(range(len(histor)), key=histor.__getitem__) / 255.0
+        histog = histo[256:511]
+        colourg = max(range(len(histog)), key=histog.__getitem__) / 255.0
+        histob = histo[512:767]
+        colourb = max(range(len(histob)), key=histob.__getitem__) / 255.0
         value = rgb2hex([colourr,colourg,colourb])
     if colour == 'r':
         histo = histo[0:255]
@@ -222,9 +214,9 @@ def masterfunc(path):
     data.append('rmode=' + modefunc(path,'r') + '&')
     data.append('gmode=' + modefunc(path,'g') + '&')
     data.append('bmode=' + modefunc(path,'b') + '&')
-    data.append('rmedian=' + medianfunc(path,'b') + '&')
-    data.append('rmedian=' + medianfunc(path,'b') + '&')
-    data.append('rmedian=' + medianfunc(path,'b') + '&')
+    data.append('rmedian=' + medianfunc(path,'r') + '&')
+    data.append('gmedian=' + medianfunc(path,'g') + '&')
+    data.append('bmedian=' + medianfunc(path,'b') + '&')
     data.append('mode=' + modefunc(path) + '&')
 
     print(''.join(data))

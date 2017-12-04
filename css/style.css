@@ -39,12 +39,13 @@ a {
 
 .box {
 	float: left;
-	width: 20%;
+	/*width: 33%;*/
+	/*flex-grow: 1;*/
+	width: 60px;
 	height: 60px;
-	margin-top: 30px;
 	margin: 10px;
-	float: center;
-	display: inline-block;
+	/*float: left;*/
+	/*display: inline-block;*/
 	/*border: 2px solid rgba(0,0,0, 0.2);*/
 }
 
@@ -71,8 +72,11 @@ a {
 .info {
 	margin-left: 10px;
 	margin-top: 10px;
-	position: left;
-	display: block;
+	margin-right: 20px;
+	float: left;
+	display: flex;
+	flex-grow: 1;
+	flex-direction: column;
 }
 
 .imgEffectMult {
@@ -83,10 +87,10 @@ a {
 }
 
 .imgEffect {
-	margin-top: 50px;
 	padding: 20px;
-	width: 400px;
-	float: left;
+	width: 60%;
+	float: right;
+	display: block
 }
 
 table {
