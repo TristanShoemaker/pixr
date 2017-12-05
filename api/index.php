@@ -132,7 +132,7 @@ function upload(Request $request, Response $response) {
 	//$command = '//anaconda/bin/python ../py/analyze.py '.$imgpath.' --masterdata 2>&1';
 	$command = 'python ../py/analyze.py '.$imgpath.' --masterdata 2>&1';
 	$output = shell_exec($command);
-	shell_exec('python ../py/analyze.py '.$imgpath.' --thumb');
+	shell_exec('python ../py/analyze.py '.$imgpath.'.png --thumb');
 	addData($output);
 	echo $output;
 }

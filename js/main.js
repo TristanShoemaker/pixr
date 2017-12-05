@@ -236,7 +236,12 @@ function inspectImage(image) {
 
 	$('#freq').click(function() {
 		makeEffect(IMGNAME, "freq")
-		console.log(IMGNAME);
+		//console.log(IMGNAME);
+		return false;
+	});
+	$('#histo').click(function() {
+		makeEffect(IMGNAME, "histo")
+		//console.log(IMGNAME);
 		return false;
 	});
 
@@ -255,7 +260,7 @@ function makeEffect(imgname, flag) {
 			var effectImgs = "";
 			var directory = '../images/' + imgname + '_analysis/' + imgname+ '_' + flag;
 			console.log(directory);
-			if(flag == "lummap") {
+			if(flag == "lummap" || "histo") {
 				for (i=0; i<3; i++) {
 					effectImgs += '<img class="imgEffect" src="' + directory + '_' + i + '.png" />';
 				}
@@ -321,6 +326,7 @@ function upload() {
 		contentType: false,
 		processData: false,
 		success: function(data, textStatus, jqXHR) {
+			console.log(data);
 			var parser = data.split("=");
 			var parser2 = parser[1].split("&");
 			var file_str = '../images/' + parser2[0] +'.png';
@@ -329,7 +335,7 @@ function upload() {
 			inspectImage(file_str);
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
-			alert('upload error: ' + textStatus + '\nerror: ' + errorThrown);
+			console.log('upload error: ' + data + '\nerror: ' + errorThrown);
 		}
 	});
 }
