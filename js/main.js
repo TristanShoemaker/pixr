@@ -14,6 +14,8 @@ $.ajaxSetup({
     }
 });
 
+
+//button functionalities:
 $('#btnSave').click(function() {
 	addUser();
 	return false;
@@ -28,12 +30,6 @@ $('#upBtn').click(function() {
 	upload();
 	return false;
 });
-/*
-$('#btnDisplayImage').click(function() {
-	display();
-	return false;
-});
-*/
 
 $('#btnNew').click(function() {
 	document.getElementById('dataArea').setAttribute("style", "display:none");
@@ -60,17 +56,6 @@ $('#btnUpl').click(function() {
 	return false;
 })
 
-$('#btnData').click(function() {
-	document.getElementById('dataArea').setAttribute("style", "display:block");
-	document.getElementById('mainArea').setAttribute("style", "display:none");
-	document.getElementById('tranArea').setAttribute("style", "display:none");
-	document.getElementById('uplArea').setAttribute("style", "display:none");
-	document.getElementById('conArea').setAttribute("style", "display:none");
-	document.getElementById('newArea').setAttribute("style", "display:none");
-	document.getElementById('singleImageDataArea').setAttribute("style", "display: none");
-
-	var data = getData('15117244173');
-});
 
 $('#btnPixr').click(function() {
 	document.getElementById('dataArea').setAttribute("style", "display:none");
@@ -85,30 +70,8 @@ $('#btnPixr').click(function() {
 	return false;
 })
 
-$('#btnTran').click(function() {
-	document.getElementById('dataArea').setAttribute("style", "display:none");
-	document.getElementById('mainArea').setAttribute("style", "display:none");
-	document.getElementById('uplArea').setAttribute("style", "display:none");
-	document.getElementById('tranArea').setAttribute("style", "display:block");
-	document.getElementById('conArea').setAttribute("style", "display:none");
-	document.getElementById('newArea').setAttribute("style", "display:none");
-	document.getElementById('singleImageDataArea').setAttribute("style", "display: none");
 
-	return false;
-})
-
-$('#btnCont').click(function() {
-	document.getElementById('dataArea').setAttribute("style", "display:none");
-	document.getElementById('mainArea').setAttribute("style", "display:none");
-	document.getElementById('uplArea').setAttribute("style", "display:none");
-	document.getElementById('tranArea').setAttribute("style", "display:none");
-	document.getElementById('conArea').setAttribute("style", "display:block");
-	document.getElementById('newArea').setAttribute("style", "display:none");
-	document.getElementById('singleImageDataArea').setAttribute("style", "display: none");
-
-	return false;
-})
-
+//get the image data from the database
 function getData(imgname) {
   console.log('Get data for image: ' + imgname);
 
@@ -120,8 +83,6 @@ function getData(imgname) {
       success: function(data){
 				var imgdata = data.imgdata;
 				console.log(data.imgdata);
-				//currentImg = data.imgdata;
-
       },
 			error: function(data) {
 				alert("error: " + data);
@@ -129,48 +90,8 @@ function getData(imgname) {
   });
 
 }
-/*
-function getDataOld(imgname) {
-  console.log('Get data for image: ' + imgname);
 
-  $.ajax({
-      type: 'GET',
-      url: rootURL + '/imgdata/' + imgname,
-      dataType: "json",
-      asynch: false,
-      success: function(data){
-				var imgdata = data.imgdata;
-				console.log(data.imgdata);
-				currentImg = data.imgdata;
-				//makePretty(imgdata);
-
-      },
-			error: function(data) {
-				alert("error: " + data);
-			}
-  });
-
-}
-*/
-/* //not in use currently
-function addData() {
-	console.log('addNewUser');
-	$.ajax({
-		type: 'POST',
-		contentType: 'application/json',
-		url: rootURL + '/imgdata',
-		dataType: "text",
-		data: formToJSON(),
-		success: function(data, textStatus, jqXHR) {
-			alert('success: '+ data);
-		},
-		error: function(jqXHR, textStatus, errorThrown) {
-			alert('addUser error: ' + textStatus);
-		}
-	});
-}
-*/
-
+//get the filenames of all the images stored on server and display them
 function fetchAllImages() {
 	$.ajax({
 		type: 'GET',
@@ -193,6 +114,7 @@ function fetchAllImages() {
 	});
 }
 
+//open one image for viewing; show colour analysis stuff like mode colour etc
 function inspectImage(image) {
 	$('#effectDisplayArea').empty();
 
@@ -214,8 +136,7 @@ function inspectImage(image) {
       success: function(data){
 				var imgdata = data.imgdata;
 				console.log(data.imgdata);
-				document.getElementById('rmode').getContext('2d').fillStyle = imgdata.rmode;
-				document.getElementById('rmode').getContext('2d').fill();
+				document.getElementById('rmode').setAttribute("style", "background-color: " + imgdata.rmode);
 				document.getElementById('gmode').setAttribute("style", "background-color: " + imgdata.gmode);
 				document.getElementById('bmode').setAttribute("style", "background-color: " + imgdata.bmode);
 				document.getElementById('rmean').setAttribute("style", "background-color: " + imgdata.rmean);
@@ -235,7 +156,7 @@ function inspectImage(image) {
 	IMGNAME = imgname;
 	return;
 }
-
+	//buttons to transmogrify the image:
 	$('#lummap').click(function() {
 		makeEffect(IMGNAME, "lummap")
 		return false;
@@ -257,6 +178,7 @@ function inspectImage(image) {
 		return false;
 	});
 
+//functions to transmogrify the image (filters, histograms etc)
 function makeEffect(imgname, flag) {
 	$('#effectDisplayArea').empty();
 
@@ -268,7 +190,6 @@ function makeEffect(imgname, flag) {
 		dataType: "json",
 		success: function(data) {
 			console.log("success: " + data);
-			//$('#effectDisplayArea').empty();
 			var effectImgs = "";
 			var directory = '../images/' + imgname + '_analysis/' + imgname+ '_' + flag;
 			console.log('flag: ' + flag);
@@ -291,42 +212,7 @@ function makeEffect(imgname, flag) {
 	});
 }
 
-function addUser() {
-	console.log('adding new user form:' + userFormToJson());
-	$.ajax({
-		type: 'POST',
-		contentType: 'application/json',
-		url: rootURL + '/users',
-		dataType: "text",
-		data: userFormToJSON(),
-		success: function(data, textStatus, jqXHR) {
-			//alert(data);
-		},
-		error: function(jqXHR, textStatus, errorThrown) {
-			alert('addUser error: ' + textStatus);
-		}
-	});
-}
-
-function userFormToJSON() {
-	return JSON.stringify({
-		"name": $('#newUserName').val(),
-		"pass": $('#newUserPass').val()
-	});
-}
-
-function getUser() {
-  console.log('get User');
-  $.ajax({
-      type: 'GET',
-      url: rootURL + '/users',
-      dataType: "json",
-      success: function(data){
-        $('#textArea').text(data.users[1].name);
-      }
-  });
-}
-
+//upload an image
 function upload() {
 	var file = document.getElementById('image').files[0];
 	var formData = new FormData($('#upload')[0]);
@@ -352,8 +238,4 @@ function upload() {
 		}
 	});
 }
-/*
-function display() {
-	$('#pic').attr('src', '../images/1.jpg').toggle();
-}
-*/
+
