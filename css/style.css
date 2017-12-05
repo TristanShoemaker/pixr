@@ -43,7 +43,7 @@ a {
 }
 
 .box {
-	float: left;
+	/*float: left;*/
 	/*width: 33%;*/
 	/*flex-grow: 1;*/
 	width: 60px;

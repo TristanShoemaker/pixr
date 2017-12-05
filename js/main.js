@@ -214,7 +214,8 @@ function inspectImage(image) {
       success: function(data){
 				var imgdata = data.imgdata;
 				console.log(data.imgdata);
-				document.getElementById('rmode').setAttribute("style", "background-color: " + imgdata.rmode);
+				document.getElementById('rmode').getContext('2d').fillStyle = imgdata.rmode;
+				document.getElementById('rmode').getContext('2d').fill();
 				document.getElementById('gmode').setAttribute("style", "background-color: " + imgdata.gmode);
 				document.getElementById('bmode').setAttribute("style", "background-color: " + imgdata.bmode);
 				document.getElementById('rmean').setAttribute("style", "background-color: " + imgdata.rmean);
