@@ -136,18 +136,30 @@ function inspectImage(image) {
       success: function(data){
 				var imgdata = data.imgdata;
 				console.log(data.imgdata);
-				document.getElementById('rmode').setAttribute("style", "background-color: " + imgdata.rmode);
-				document.getElementById('gmode').setAttribute("style", "background-color: " + imgdata.gmode);
-				document.getElementById('bmode').setAttribute("style", "background-color: " + imgdata.bmode);
-				document.getElementById('rmean').setAttribute("style", "background-color: " + imgdata.rmean);
-				document.getElementById('gmean').setAttribute("style", "background-color: " + imgdata.gmean);
-				document.getElementById('bmean').setAttribute("style", "background-color: " + imgdata.bmean);
-				document.getElementById('rmedian').setAttribute("style", "background-color: " + imgdata.rmedian);
-				document.getElementById('gmedian').setAttribute("style", "background-color: " + imgdata.gmedian);
-				document.getElementById('bmedian').setAttribute("style", "background-color: " + imgdata.bmedian);
-				document.getElementById('mode').setAttribute("style", "background-color: " + imgdata.mode);
-				document.getElementById('mean').setAttribute("style", "background-color: " + imgdata.mean);
-				document.getElementById('median').setAttribute("style", "background-color: " + imgdata.median);
+				document.getElementById('rmode').getContext('2d').fillStyle = imgdata.rmode;
+				document.getElementById('rmode').getContext('2d').fillRect(0,0,1000,1000);
+				document.getElementById('gmode').getContext('2d').fillStyle = imgdata.gmode;
+				document.getElementById('gmode').getContext('2d').fillRect(0,0,1000,1000);
+				document.getElementById('bmode').getContext('2d').fillStyle = imgdata.bmode;
+				document.getElementById('bmode').getContext('2d').fillRect(0,0,1000,1000);
+				document.getElementById('rmean').getContext('2d').fillStyle = imgdata.rmean;
+				document.getElementById('rmean').getContext('2d').fillRect(0,0,1000,1000);
+				document.getElementById('gmean').getContext('2d').fillStyle = imgdata.gmean;
+				document.getElementById('gmean').getContext('2d').fillRect(0,0,1000,1000);
+				document.getElementById('bmean').getContext('2d').fillStyle = imgdata.bmean;
+				document.getElementById('bmean').getContext('2d').fillRect(0,0,1000,1000);
+				document.getElementById('rmedian').getContext('2d').fillStyle = imgdata.rmedian;
+				document.getElementById('rmedian').getContext('2d').fillRect(0,0,1000,1000);
+				document.getElementById('gmedian').getContext('2d').fillStyle = imgdata.gmedian;
+				document.getElementById('gmedian').getContext('2d').fillRect(0,0,1000,1000);
+				document.getElementById('bmedian').getContext('2d').fillStyle = imgdata.bmedian;
+				document.getElementById('bmedian').getContext('2d').fillRect(0,0,1000,1000);
+				document.getElementById('mode').getContext('2d').fillStyle = imgdata.mode;
+				document.getElementById('mode').getContext('2d').fillRect(0,0,1000,1000);
+				document.getElementById('mean').getContext('2d').fillStyle = imgdata.mean;
+				document.getElementById('mean').getContext('2d').fillRect(0,0,1000,1000);
+				document.getElementById('median').getContext('2d').fillStyle = imgdata.median;
+				document.getElementById('median').getContext('2d').fillRect(0,0,1000,1000);
 		  },
 			error: function(data) {
 				alert("error: " + data);
@@ -238,4 +250,3 @@ function upload() {
 		}
 	});
 }
-
