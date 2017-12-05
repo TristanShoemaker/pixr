@@ -263,7 +263,7 @@ def thumberize(path):
     pathHead, pathTail = os.path.split(path)
     newPath = path[:-4] + '_thumb.png'
     #print newPath
-    ImageOps.fit(img, (500,500)).save(newPath)
+    ImageOps.fit(img, (256,256)).save(newPath)
 
 def masterfunc(path):
     pathHead, pathTail = os.path.split(path)

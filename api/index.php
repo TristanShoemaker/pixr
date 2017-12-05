@@ -16,8 +16,8 @@ $app->post('/upload', 'upload');
 $app->get('/display', 'display');
 $app->get('/python', 'snek');
 $app->get('/imgdata/{imgname}', 'getData');
-$app->delete('/deleteimg/{imgname}','deleteImg');
-$app->delete('/deleteusr/{usrname}','deleteUsr');
+$app->get('/deleteimg/{imgname}','deleteImg');
+$app->get('/deleteusr/{usrname}','deleteUsr');
 $app->get('/getAll', 'getAllImages');
 $app->get('/analyze/{flag}', 'analyze');
 
@@ -66,16 +66,17 @@ function deleteUsr(Request $request, Response $response, $args) { //not in js
 
 function deleteImg(Request $request, Response $response, $args) { //not in js
 	$name = $args['imgname'];
-	$sql = "DELETE FROM imgdata WHERE name=:name";
+	$sql = "DELETE FROM imgdata WHERE imgname=:imgname";
 	try {
 		$db = getConnection();
 		$stmt = $db->prepare($sql);
-		$stmt->bindParam("name", $name);
+		$stmt->bindParam("imgname", $name);
 		$stmt->execute();
 		$db = null;
 	} catch(PDOException $e) {
 		echo '{"error":{"text":'. $e->getMessage() .'}}';
 	}
+	shell_exec('rm -R ../images/'.$name.'*');
 }
 
 function getData(Request $request, Response $response, $args){

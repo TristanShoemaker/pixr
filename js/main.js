@@ -3,6 +3,17 @@ var IMGNAME = "";
 
 document.onload = fetchAllImages();
 
+$.ajaxSetup({
+    beforeSend:function(){
+        // show gif here, eg:
+        $("#loading").show();
+    },
+    complete:function(){
+        // hide gif here, eg:
+        $("#loading").hide();
+    }
+});
+
 $('#btnSave').click(function() {
 	addUser();
 	return false;
