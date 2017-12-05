@@ -126,13 +126,19 @@ function addData(String $value) {
 }
 
 function upload(Request $request, Response $response) {
-	$imgpath = '../images/'.time();
-	move_uploaded_file($_FILES['image']['tmp_name'],$imgpath); //move(temp_name_in_system, to: directory/
-	//$command = '//anaconda/bin/python ../py/analyze.py '.$imgpath.' --masterdata 2>&1';
-	$command = 'python ../py/analyze.py '.$imgpath.' --masterdata 2>&1';
-	$output = shell_exec($command);
-	shell_exec('python ../py/analyze.py '.$imgpath.'.png --thumb');
-	addData($output);
+	//echo print_r(array_values($_FILES['image']));
+	foreach ($_FILES['image']['tmp_name'] as $uploadedfile) {
+		$imgpath = '../images/'.time().substr(microtime(true),-4);
+		//echo $uploadedfile;
+		if(move_uploaded_file($uploadedfile,$imgpath)) { //move(temp_name_in_system, to: directory/
+		//$command = '//anaconda/bin/python ../py/analyze.py '.$imgpath.' --masterdata 2>&1';
+			$command = 'python ../py/analyze.py '.$imgpath.' --masterdata 2>&1';
+			$output = shell_exec($command);
+			//echo 'path: '.$imgpath.'output: '.$output;
+			shell_exec('python ../py/analyze.py '.$imgpath.'.png --thumb');
+			addData($output);
+		}
+	}
 	echo $output;
 }
 

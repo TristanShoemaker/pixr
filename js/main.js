@@ -255,15 +255,16 @@ function makeEffect(imgname, flag) {
 		url: rootURL + '/analyze/' + command_str,
 		dataType: "json",
 		success: function(data) {
-			console.log("success:" + data);
+			console.log("success: " + data);
 			//$('#effectDisplayArea').empty();
 			var effectImgs = "";
 			var directory = '../images/' + imgname + '_analysis/' + imgname+ '_' + flag;
-			console.log(directory);
-			if(flag == ("lummap" || "histo")) {
+			console.log('flag: ' + flag);
+			if((flag == "lummap") || (flag == "histo")) {
 				for (i=0; i<3; i++) {
 					effectImgs += '<img class="imgEffect" src="' + directory + '_' + i + '.png" />';
 				}
+				console.log('flag: ' + flag);
 			}
 			else {
 				effectImgs += '<img class="imgEffect" src="' + directory + '.png" style="width: 400px:"/>';
