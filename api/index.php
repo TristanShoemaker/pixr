@@ -10,14 +10,14 @@ ob_end_clean();
 
 $app = new \Slim\App;
 
-$app->post('/users', 'addNewUser');
-$app->get('/users','getUser');
+//$app->post('/users', 'addNewUser');
+//$app->get('/users','getUser');
 $app->post('/upload', 'upload');
 $app->get('/display', 'display');
-$app->get('/python', 'snek');
+//$app->get('/python', 'snek');
 $app->get('/imgdata/{imgname}', 'getData');
 $app->get('/deleteimg/{imgname}','deleteImg');
-$app->get('/deleteusr/{usrname}','deleteUsr');
+//$app->get('/deleteusr/{usrname}','deleteUsr');
 $app->get('/getAll', 'getAllImages');
 $app->get('/analyze/{flag}', 'analyze');
 
@@ -49,7 +49,7 @@ function getAllImages() {
 	$files = glob($directory."*_thumb.png");
 	echo '{"filename": ' . json_encode($files) .'}';
 }
-
+/*
 function deleteUsr(Request $request, Response $response, $args) { //not in js
 	$name = $args['usrname'];
 	$sql = "DELETE FROM users WHERE name=:name";
@@ -63,7 +63,7 @@ function deleteUsr(Request $request, Response $response, $args) { //not in js
 		echo '{"error":{"text":'. $e->getMessage() .'}}';
 	}
 }
-
+*/
 function deleteImg(Request $request, Response $response, $args) { //not in js
 	$name = $args['imgname'];
 	$sql = "DELETE FROM imgdata WHERE imgname=:imgname";
@@ -142,7 +142,7 @@ function upload(Request $request, Response $response) {
 	}
 	echo $output;
 }
-
+/*
 function addNewUser(Request $request, Response $response) {
 	//echo $request->getParam('name');
 	$name = $request->getParam('name');
@@ -175,6 +175,6 @@ function getUser(){
     echo '{"error":{"text":'. $e->getMessage() .'}}';
   }
 }
-
+*/
 
 ?>
