@@ -67,7 +67,7 @@ $('#btnPixr').click(function() {
 	document.getElementById('uplArea').setAttribute("style", "display:none");
 	document.getElementById('tranArea').setAttribute("style", "display:none");
 	document.getElementById('conArea').setAttribute("style", "display:none");
-	document.getElementById('newArea').setAttribute("style", "display:block");
+	document.getElementById('newArea').setAttribute("style", "display:flex");
 	document.getElementById('singleImageDataArea').setAttribute("style", "display: none");
 
 	fetchAllImages();
@@ -260,7 +260,7 @@ function makeEffect(imgname, flag) {
 			var effectImgs = "";
 			var directory = '../images/' + imgname + '_analysis/' + imgname+ '_' + flag;
 			console.log(directory);
-			if(flag == "lummap" || "histo") {
+			if(flag == ("lummap" || "histo")) {
 				for (i=0; i<3; i++) {
 					effectImgs += '<img class="imgEffect" src="' + directory + '_' + i + '.png" />';
 				}
@@ -268,7 +268,7 @@ function makeEffect(imgname, flag) {
 			else {
 				effectImgs += '<img class="imgEffect" src="' + directory + '.png" style="width: 400px:"/>';
 			}
-			console.log(effectImgs);
+			console.log(flag + ': ' + data);
 
 			$('#effectDisplayArea').append(effectImgs);
 		},

@@ -54,9 +54,14 @@ def contourfunc(path):
 
 def medianfunc(path,colour='none'):
     img = matGetImg(path)
+    if pilGetImg(path).getbands()[0] == 'L':
+        median = np.median(img, axis=(0,1))
+        return rgb2hex([median,median,median])
+
     if colour == 'none':
         median = np.median(img, axis=(0,1))
         median = rgb2hex(median)
+
     if colour == 'r':
         img = img[:,:,0]
         median = rgb2hex([np.median(img, axis=(0,1)),0,0])
@@ -73,6 +78,10 @@ def medianfunc(path,colour='none'):
 
 def cintensityfunc(path,colour):
     img = matGetImg(path)
+
+    if pilGetImg(path).getbands()[0] == 'L':
+        mean = np.mean(img, axis=(0,1))
+        return rgb2hex([mean,mean,mean])
 
     if colour == 'r':
         img = img[:,:,0]
@@ -91,25 +100,34 @@ def cintensityfunc(path,colour):
 def meanfunc(path):
     img = matGetImg(path)
     mean = np.mean(img, axis=(0,1))
-    mean = rgb2hex(mean)
-
+    if pilGetImg(path).getbands()[0] == 'L':
+        mean = rgb2hex([mean,mean,mean])
+    else: mean = rgb2hex(mean)
+    #print mean
     return mean
 
 def freqfunc(path):
     im = Image.open(path)
     histo = im.histogram()
-    histor = histo[0:255]
-    histog = histo[256:511]
-    histob = histo[512:767]
-    histo[512]=0
+    if im.getbands()[0] == 'L':
+        plt.figure()
+        plt.gca().set_ylim([0,max(histo)+50])
+        plt.gca().set_xlim([0,255])
 
-    plt.figure()
-    plt.gca().set_ylim([0,max(histo)+50])
-    plt.gca().set_xlim([0,255])
+        plt.fill_between(range(0,255),0,histo[0:255], color='black', alpha=0.3)
+    else:
+        histor = histo[0:255]
+        histog = histo[256:511]
+        histob = histo[512:767]
+        #print 'bands' + str(im.getbands())
 
-    plt.fill_between(range(0,255),0,histor, color='red', alpha=0.3)
-    plt.fill_between(range(0,255),0,histog, color='green', alpha=0.3)
-    plt.fill_between(range(0,255),0,histob, color='blue', alpha=0.3)
+        plt.figure()
+        plt.gca().set_ylim([0,max(histo)+50])
+        plt.gca().set_xlim([0,255])
+
+        plt.fill_between(range(0,255),0,histor, color='red', alpha=0.3)
+        plt.fill_between(range(0,255),0,histog, color='green', alpha=0.3)
+        plt.fill_between(range(0,255),0,histob, color='blue', alpha=0.3)
     #plt.show()
 
     pathHead, pathTail = os.path.split(path)
@@ -125,14 +143,27 @@ def modefunc(path,colour='none'):
     im = Image.open(path)
     histo = im.histogram()
 
-    histo[512] = 0
+    if im.getbands()[0] == 'L':
+        for i in range(0,256//BINSIZE):
+            bins.append(sum(histo[(i * BINSIZE):(((i + 1) * BINSIZE) - 1)]))
+        colour = bincolours[max(range(len(bins)), key=bins.__getitem__)] / 255.0
+        return rgb2hex([colour,colour,colour])
+
     if colour == 'none':
         histor = histo[0:255]
-        colourr = max(range(len(histor)), key=histor.__getitem__) / 255.0
-        histog = histo[256:511]
-        colourg = max(range(len(histog)), key=histog.__getitem__) / 255.0
+        for i in range(0,256//BINSIZE):
+            bins.append(sum(histor[(i * BINSIZE):(((i + 1) * BINSIZE) - 1)]))
+        colourr = bincolours[max(range(len(bins)), key=bins.__getitem__)] / 255.0
+        histog = histo[256:512]
+        bins = []
+        for i in range(0,256//BINSIZE):
+            bins.append(sum(histog[(i * BINSIZE):(((i + 1) * BINSIZE) - 1)]))
+        colourg = bincolours[max(range(len(bins)), key=bins.__getitem__)] / 255.0
         histob = histo[512:767]
-        colourb = max(range(len(histob)), key=histob.__getitem__) / 255.0
+        bins = []
+        for i in range(0,256//BINSIZE):
+            bins.append(sum(histob[(i * BINSIZE):(((i + 1) * BINSIZE) - 1)]))
+        colourb = bincolours[max(range(len(bins)), key=bins.__getitem__)] / 255.0
         value = rgb2hex([colourr,colourg,colourb])
     if colour == 'r':
         histo = histo[0:255]
